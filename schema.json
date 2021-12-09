@@ -1,0 +1,75 @@
+{
+	"user": {
+		"user_id": "uuid",
+		"name": "",
+		"email": "",
+		"password": "",
+		"profile_picture": "url",
+		"theme": "dark/light",
+		"__questions_asked": "",
+		"__answers_given": "",
+		"__comments": ""
+	},
+	"question": {
+		"question_id": "uuid",
+		"questioned_at": "time",
+		"questioned_by": "user_id",
+		"question": "",
+		"upvotes": "",
+		"downvotes": ""
+	},
+	"tags": {
+		"tag_id": "uuid",
+		"tag": ""
+	},
+	"question_tags": {
+		"tag_id": "uuid",
+		"question_id": "uuid"
+	},
+	"question_comment": {
+		"question_id": "uuid",
+		"comment_id": "uuid"
+	},
+	"comment": {
+		"comment_id": "uuid",
+		"commented_at": "time",
+		"commented_by": "user_id",
+		"comment": ""
+	},
+	"answers": {
+		"answer_id": "uuid",
+		"answered_at": "time",
+		"answered_by": "user_id",
+		"answer": "",
+		"upvotes": "",
+		"downvotes": ""
+	},
+	"answer_comment": {
+		"answer_id": "uuid",
+		"comment_id": "uuid"
+	},
+	"__questions_asked": {
+		"total_questions": "",
+		"questions": [
+			{
+				"questionObj": ""
+			}
+		]
+	},
+	"__answers_given": {
+		"total_answer": "",
+		"answer": [
+			{
+				"answerObj": ""
+			}
+		]
+	},
+	"comments": {
+		"total_comments": "",
+		"comments": [
+			{
+				"commentObj": ""
+			}
+		]
+	}
+}
