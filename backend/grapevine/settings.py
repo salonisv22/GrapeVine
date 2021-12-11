@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'users'
+    'users',
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,10 @@ MEDIA_URL = '/media/'
 # for custom user
 AUTH_USER_MODEL = "users_management.UserManage" 
 AUTH_USER_MODEL = 'users.Users'
+
+# for jwt authentication
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
