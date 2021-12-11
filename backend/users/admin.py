@@ -5,12 +5,13 @@ from django.contrib.auth.admin import UserAdmin
 
 @admin.register(Users)
 class CustomUserAdmin(UserAdmin):
-    readonly_fields = [
-        'password',
-    ]
-    list_display = [
-        'username',
-        'email',
-        'is_superuser',
-    ]
-    ordering = ('joined_at', 'username')
+    pass
+    # readonly_fields = [
+    #     'password',
+    # ]
+    # list_display = [
+    #     'username',
+    #     'email',
+    #     'is_superuser',
+    # ]
+    # ordering = ('joined_at', 'username')

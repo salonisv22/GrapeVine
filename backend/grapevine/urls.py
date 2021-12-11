@@ -30,6 +30,6 @@ urlpatterns = [
 	path('api/token/refresh/',
 		jwt_views.TokenRefreshView.as_view(),
 		name ='token_refresh'),
-	path('', include('authentication.urls')),
+	path('', include('authentication.urls'))
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
