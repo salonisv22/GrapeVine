@@ -127,12 +127,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Media route configuration
+
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
-
-# for custom user
-AUTH_USER_MODEL = "users_management.UserManage" 
-AUTH_USER_MODEL = 'users.Users'
 
 # for jwt authentication
 REST_FRAMEWORK = {
@@ -140,3 +138,6 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+# Registering Custom user model
+
+AUTH_USER_MODEL = 'users.Users'

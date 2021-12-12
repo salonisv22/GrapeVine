@@ -24,10 +24,10 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('templates/',views.temp, name="temp"),
-    path('api/token/',
+    path('login/',
 		jwt_views.TokenObtainPairView.as_view(),
 		name ='token_obtain_pair'),
-	path('api/token/refresh/',
+	path('token/refresh/',
 		jwt_views.TokenRefreshView.as_view(),
 		name ='token_refresh'),
 	path('', include('authentication.urls'))
