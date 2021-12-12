@@ -1,0 +1,232 @@
+.shiftToLeft {
+  transform: translateX(-100%);
+}
+.shiftToNeutral {
+  transform: translateX(0%);
+}
+
+.shiftToNeutralForm {
+  transform: translateX(0%) translateY(-100%);
+}
+
+.shiftToRight {
+  transform: translateX(100%);
+}
+
+
+.LoginSignUpContainer {
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top:1%;
+}
+
+.LoginSignUpBox {
+  background-color: #f1f5f8;
+  width: 25vw;
+  height: 70vh;
+  box-sizing: border-box;
+  border: 1px solid black;
+  overflow: hidden;
+}
+.login_signUp_toggle {
+  display: flex;
+  height: 3vmax;
+}
+.login_signUp_toggle > p {
+  color: rgba(0, 0, 0, 0.678);
+  font: 300 1.5vmax Cursive;
+  transition: all 0.5s;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+.login_signUp_toggle > p:hover {
+  color: #2C2E43;
+}
+
+.LoginSignUpBox > div > button {
+  background-color:#2C2E43;
+  height: 3px;
+  width: 50%;
+  border: none;
+  transition: all 0.5s;
+}
+
+.loginForm,
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 2vmax;
+  justify-content: space-evenly;
+  height: 70%;
+  transition: all 0.5s;
+}
+
+.signUpForm {
+  transform: translateY(-100%) translateX(-100vmax);
+}
+
+.loginForm > div > svg,
+.signUpForm > div > svg {
+  position: absolute;
+  transform: translateX(0.75vmax);
+  font-size: 1.5vmax;
+  color: rgba(0, 0, 0, 0.623);
+}
+
+.loginForm > div,
+.signUpForm > div {
+  display: flex;
+  width: 100%;
+  column-gap: 1vmax;
+  align-items: center;
+}
+.loginForm > div > input,
+.signUpForm > div > input {
+  padding: 1vmax 4vmax;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 300 0.9vmax cursive;
+  outline: none;
+}
+
+
+
+.loginForm > a {
+  color: rgba(0, 0, 0, 0.651);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: all 0.5s;
+  font: 500 0.8vmax "Gill Sans";
+}
+
+.loginForm > a:hover {
+  color: black;
+}
+
+
+
+.loginBtn,
+.signUpBtn {
+  border: none;
+  background-color: #6b1613;
+  color: white;
+  font: 300 1.5vmax "Roboto";
+  width: 50%;
+  padding: 0.8vmax;
+  cursor: pointer;
+  transition: all 0.5s;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+}
+
+.loginBtn:hover,
+.signUpBtn:hover {
+  background-color: #2C2E43;
+}
+
+@media screen and (max-width: 1000px) {
+  .LoginSignUpContainer {
+    height:70vh
+  }
+  .LoginSignUpBox {
+    /* width: 40vw; */
+    height: 40vh;
+  }
+  .login_signUp_toggle {
+    height: 3vmax;
+  }
+  .login_signUp_toggle > p {
+    font: 300 1.5vmax "Roboto";
+  }
+
+  .loginForm,
+  .signUpForm {
+    padding: 4vmax;
+    justify-content: space-evenly;
+  }
+
+  .loginForm > div > input,
+  .signUpForm > div > input {
+    padding: 1vmax 2vmax;
+    padding-right: 1vmax;
+    font: 300 1.25vmax cursive;
+  }
+
+  .loginForm > div,
+.signUpForm > div {
+  display: flex;
+  width: 100%;
+  column-gap: 1vmax;
+  align-items: center;
+}
+  
+
+ 
+
+  .loginForm > a {
+    font: 500 1.8vmax "Gill Sans";
+  }
+
+ 
+
+  .loginBtn,
+  .signUpBtn {
+    font: 300 1.5vmax "Roboto";
+    padding: 0.8vmax;
+  }
+}
+
+@media screen and (max-width: 485px) {
+  .LoginSignUpContainer {
+    height:60vh
+  }
+  .LoginSignUpBox {
+    width: 40vw;
+    height: 40vh;
+  }
+  .login_signUp_toggle {
+    height: 4vmax;
+  }
+  .login_signUp_toggle > p {
+    font: 300 1.5vmax "Roboto";
+  }
+
+  .loginForm,
+  .signUpForm {
+    padding: 4vmax;
+    justify-content: space-evenly;
+  }
+
+  .loginForm > div > input,
+  .signUpForm > div > input {
+    padding: 1vmax 2vmax;
+    padding-right: 1vmax;
+    font: 300 1.25vmax cursive;
+  }
+
+ 
+
+  .loginForm > a {
+    font: 500 1.8vmax "Gill Sans";
+  }
+
+ 
+
+  .loginBtn,
+  .signUpBtn {
+    font: 300 1.5vmax "Roboto";
+    padding: 1.5vmax;
+  }
+}
