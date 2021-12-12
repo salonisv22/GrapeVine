@@ -1,7 +1,14 @@
+import { Routes } from "react-router";
+import { Route} from "react-router-dom";
 import "./index.scss";
+import LoginRegister from "./login";
 
 const App = () => {
-	return <h1>Hello world!</h1>;
+	return <>
+		<Routes>
+			<Route path="/" element={<LoginRegister/>}></Route>
+		</Routes>
+	</>;
 };
 
 export default App;
