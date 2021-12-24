@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
@@ -8,6 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate();
+
   return (
     <Box>
       <h1 style={{ textAlign: "center" }}>GrapeVine</h1>
@@ -15,12 +18,16 @@ const Login = () => {
         <Stack>
           <img alt="" width={300} src="/assets/login.svg" />
           <Box display="inline-block" style={{ paddingTop: "1rem" }}>
-            <Link component="button" href="#" underline="none">
+            <Link
+              component="button"
+              onClick={() => navigate("/register")}
+              underline="none"
+            >
               Don't have an account, create one.
             </Link>
           </Box>
         </Stack>
-        <Box sx={{ padding: 30 }}>
+        <Box sx={{ padding: "0px 35px 35px 35px" }}>
           <h2>Login</h2>
           <Stack spacing={2}>
             <TextField
@@ -29,14 +36,14 @@ const Login = () => {
               value={username}
               variant="outlined"
               label="Username"
-              placeholder="your username"
+              placeholder="Username"
             />
             <TextField
               onChange={(e) => setPassword(e.target.password)}
               size="small"
               variant="outlined"
               label="Password"
-              placeholder="Enter your Password"
+              placeholder="Password"
               type={showPassword ? "text" : "password"}
               value={password}
               InputProps={{
