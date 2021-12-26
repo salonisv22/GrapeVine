@@ -27,7 +27,7 @@ const Register = () => {
           </Box>
         </Stack>
         <Box sx={{ padding: "0px 35px 35px 35px" }}>
-          <h2>Create a new Account</h2>
+          <h2>Create a new account</h2>
           <Stack spacing={2}>
             <TextField
               onChange={(e) => setUsername(e.target.value)}

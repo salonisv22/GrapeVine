@@ -28,7 +28,7 @@ const Login = () => {
           </Box>
         </Stack>
         <Box sx={{ padding: "0px 35px 35px 35px" }}>
-          <h2>Login</h2>
+          <h2>Welcome Back</h2>
           <Stack spacing={2}>
             <TextField
               onChange={(e) => setUsername(e.target.value)}
