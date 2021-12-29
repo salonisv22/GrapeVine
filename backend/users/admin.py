@@ -8,6 +8,7 @@ class CustomUserAdmin(UserAdmin):
         'password',
     ]
     list_display = [
+        'id',
         'username',
         'email',
         'is_superuser',

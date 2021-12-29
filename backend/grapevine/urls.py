@@ -20,8 +20,16 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from rest_framework_simplejwt import views as jwt_views
-from . import views 
-urlpatterns = [
+from . import views
+from users.views import UserView
+from question.views import QuestionView
+from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register(r'users', UserView)
+router.register(r'questions', QuestionView) 
+urlpatterns = router.urls
+urlpatterns += [
     path('admin/', admin.site.urls),
     path('templates/',views.temp, name="temp"),
     path('login/',
@@ -30,6 +38,7 @@ urlpatterns = [
 	path('token/refresh/',
 		jwt_views.TokenRefreshView.as_view(),
 		name ='token_refresh'),
-	path('', include('authentication.urls'))
+	path('', include('authentication.urls')),
+    path('my-questions/', QuestionView.as_view({'get' : 'myQ'}), name='my_questions')
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
