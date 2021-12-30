@@ -7,6 +7,7 @@ import NotFound from "./404";
 import Authentication from "./authentication/";
 import Login from "./authentication/login";
 import Register from "./authentication/register";
+import Questions from "./quespage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
+      <Route path="/questions" element={<Questions/>}/>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
