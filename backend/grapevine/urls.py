@@ -39,6 +39,6 @@ urlpatterns += [
 		jwt_views.TokenRefreshView.as_view(),
 		name ='token_refresh'),
 	path('', include('authentication.urls')),
-    path('my-questions/', QuestionView.as_view({'get' : 'myQ'}), name='my_questions')
+    path('all-questions/', QuestionView.as_view({'get' : 'allQ'}), name='all_questions')
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

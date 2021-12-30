@@ -9,6 +9,9 @@ class UserView(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UserSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(is_active = True)
+
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()

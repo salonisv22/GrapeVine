@@ -6,7 +6,7 @@ from .models import Question
 class QuestionAdmin(admin.ModelAdmin):
     list_display = [
         'id',
-        'questioned_by',
+        'user',
         'questioned_at',
     ]
     ordering = ('questioned_at', 'id')
