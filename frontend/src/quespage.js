@@ -11,12 +11,12 @@ import ArrowDropDownSharpIcon from "@material-ui/icons/ArrowDropDownSharp";
 import { fontFamily, textAlign } from "@mui/system";
 
 const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    fontFamily:"cursive",
-    padding: theme.spacing(0.25, 0.5),
-  backgroundColor:"#6C63FF",
+  ...theme.typography.body2,
+  fontFamily: "cursive",
+  padding: theme.spacing(0.25, 0.5),
+  backgroundColor: "#6C63FF",
   textAlign: "center",
-  color:"white",
+  color: "white",
 }));
 
 const Questions = () => {
@@ -38,7 +38,12 @@ const Questions = () => {
             <>
               <Container fixed>
                 <h1>{title}</h1>
-                <plaintext sx={{color:"text.secondary", fontFamily:"Roboto"}}>Asked at:{askedat}   Last Active:{lastactive}  Viewed:{viewed_count} times</plaintext>
+                <plaintext
+                  sx={{ color: "text.secondary", fontFamily: "Roboto" }}
+                >
+                  Asked at:{askedat} Last Active:{lastactive} Viewed:
+                  {viewed_count} times
+                </plaintext>
                 <Divider />
                 <Grid container spacing={2}>
                   <Grid item xs="auto">
@@ -49,7 +54,11 @@ const Questions = () => {
                         </IconButton>
                       </ListItem>
                       <ListItem>
-                        <ListItemText edge="end" fontSize="large" primary={upvote_count - downvote_count} />
+                        <ListItemText
+                          edge="end"
+                          fontSize="large"
+                          primary={upvote_count - downvote_count}
+                        />
                       </ListItem>
                       <ListItem disablePadding>
                         <IconButton edge="end" aria-label="delete">
