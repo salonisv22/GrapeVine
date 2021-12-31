@@ -7,8 +7,8 @@ import NotFound from "./404";
 import Authentication from "./authentication/";
 import Login from "./authentication/login";
 import Register from "./authentication/register";
-import Questions from "./quespage";
-import AllQuestions from "./allQuestions";
+import Questions from "./questions/questionByID";
+import AllQuestions from "./questions/questionList";
 
 const App = () => {
   return (
