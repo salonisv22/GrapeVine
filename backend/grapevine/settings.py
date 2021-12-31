@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'authentication',
-    'question'
+    'question',
+    'upvote',
+    'downvote',
 ]
 
 MIDDLEWARE = [

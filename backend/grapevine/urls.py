@@ -20,6 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from rest_framework_simplejwt import views as jwt_views
+from downvote.views import DownvoteView
+from upvote.views import UpvoteView
 from . import views
 from users.views import UserView
 from question.views import QuestionView
@@ -28,6 +30,8 @@ from rest_framework import routers
 router = routers.SimpleRouter()
 router.register(r'users', UserView)
 router.register(r'questions', QuestionView) 
+router.register(r'upvote', UpvoteView)
+router.register(r'downvote', DownvoteView)
 urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),

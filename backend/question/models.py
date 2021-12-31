@@ -8,5 +8,4 @@ class Question(models.Model):
     user = models.ForeignKey(Users, on_delete = models.CASCADE)
     query_title = models.CharField(max_length=50)
     query = models.TextField()
-    upvotes = models.IntegerField(default = 0)
-    downvotes = models.IntegerField(default = 0)
+  
