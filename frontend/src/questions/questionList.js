@@ -53,16 +53,8 @@ const AllQuestions = () => {
         <br />
         <Divider />
         {questions.map((question) => {
-          const {
-            tags,
-            title,
-            description,
-            upvote_count,
-            downvote_count,
-            askedat,
-            lastactive,
-            viewed_count,
-          } = question;
+          const { tags, title, description, upvote_count, downvote_count } =
+            question;
           return (
             <>
               <Container className="QuestionList">

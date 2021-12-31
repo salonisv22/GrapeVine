@@ -1,5 +1,5 @@
 import { questions } from "./ques";
-import { Grid, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Container, Divider } from "@material-ui/core";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,7 +19,6 @@ const Questions = () => {
     downvote_count,
     askedat,
     lastactive,
-    viewed_count,
   } = questions[0];
   return (
     <>
