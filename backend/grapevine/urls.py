@@ -20,8 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from rest_framework_simplejwt import views as jwt_views
-from downvote.views import DownvoteView
-from upvote.views import UpvoteView
+
 from . import views
 from users.views import UserView
 from question.views import QuestionView
@@ -32,8 +31,7 @@ router = routers.SimpleRouter()
 router.register(r'user', UserView)
 router.register(r'question', QuestionView) 
 router.register(r'answer', AnswerView) 
-router.register(r'upvote', UpvoteView)
-router.register(r'downvote', DownvoteView)
+
 urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
@@ -45,6 +43,7 @@ urlpatterns += [
 		jwt_views.TokenRefreshView.as_view(),
 		name ='token_refresh'),
 	path('', include('authentication.urls')),
+    path('',include('vote.urls')),
     path('all-questions/', QuestionView.as_view({'get' : 'allQ'}), name='all_questions')
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

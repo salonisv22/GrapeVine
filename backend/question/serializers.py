@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from .models import Question
-from downvote.serializers import DownvoteSerializer
-from upvote.serializers import UpvoteSerializer
+from vote.serializers import DownvoteQSerializer
+from vote.serializers import UpvoteQSerializer
 class QuestionSerializer(serializers.ModelSerializer):
-    question_downvoted = DownvoteSerializer(many=True, read_only=True)
-    question_upvoted = UpvoteSerializer(many=True, read_only=True )
+    question_downvoted = DownvoteQSerializer(many=True, read_only=True)
+    question_upvoted = UpvoteQSerializer(many=True, read_only=True )
     class Meta:
         model = Question
         fields = "__all__"
