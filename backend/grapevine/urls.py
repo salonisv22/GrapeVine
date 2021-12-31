@@ -26,10 +26,12 @@ from . import views
 from users.views import UserView
 from question.views import QuestionView
 from rest_framework import routers
+from answer.views import AnswerView
 
 router = routers.SimpleRouter()
-router.register(r'users', UserView)
-router.register(r'questions', QuestionView) 
+router.register(r'user', UserView)
+router.register(r'question', QuestionView) 
+router.register(r'answer', AnswerView) 
 router.register(r'upvote', UpvoteView)
 router.register(r'downvote', DownvoteView)
 urlpatterns = router.urls

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'question',
     'upvote',
     'downvote',
+    'answer',
 ]
 
 MIDDLEWARE = [
