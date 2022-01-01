@@ -153,7 +153,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.Users'
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=120)
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=30)
 }
 
 # CORS Configuration
