@@ -56,9 +56,18 @@ def fetch_and_set_tokens(self, request):
     if 'access' in serializer.validated_data and 'refresh' in serializer.validated_data:
         data = serializer.validated_data
         refresh_token = data.pop('refresh', None)
-        response = Response(data, status = 200)
-        response.set_cookie('refresh', refresh_token) #TODO: path='/refresh/'
-        # response.set_cookie('access', serializer.validated_data.get("access", None), httponly = True)
+        response = Response()
+        response.data = data
+        response.status = 200
+        response.set_cookie(
+            key = "refresh",
+            value = refresh_token,
+            max_age = 365 * 24 * 60 * 60 ,
+            secure = True,
+            httponly = True,
+            samesite = 'Lax',
+            # path = '/refresh'
+        )
         return response
 
     return Response({ "Error": "Something went wrong"}, status = 400)
@@ -75,7 +84,6 @@ class MyTokenRefreshView(TokenRefreshView):
     serializer_class = TokenRefreshSerializer
 
     def post(self, request, *args, **kwargs):
-        # print(request.user)
         if 'refresh' not in request.data:
             if 'refresh' in request.COOKIES:
                 request.data['refresh'] = request.COOKIES.get('refresh', None)

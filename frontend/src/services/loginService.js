@@ -13,6 +13,7 @@ export const login = createApi({
         method: "POST",
         body: loginCredentials,
         headers: config.POST_HEADER,
+        credentials: "include",
       }),
     }),
   }),
