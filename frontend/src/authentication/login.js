@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
-import { useLoginMutation } from "../services/login";
+import { useLoginMutation } from "../services/loginService";
 
 const Login = () => {
   const [username, setUsername] = useState();
@@ -12,10 +12,6 @@ const Login = () => {
   const [login, loginData] = useLoginMutation();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(password);
-  }, [password]);
 
   useEffect(() => {
     console.log(loginData);

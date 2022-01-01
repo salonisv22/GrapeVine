@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
+import { useCreateUserMutation } from "../services/usersService";
+
 const Register = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const [createUser, createUserData] = useCreateUserMutation();
+
   const navigate = useNavigate();
 
   return (
@@ -99,7 +103,9 @@ const Register = () => {
               </Link>
             </Box> */}
             <Box style={{ textAlign: "right" }} display="inline-block">
-              <Button variant="contained">Register</Button>
+              <Button onClick={() => createUser()} variant="contained">
+                Register
+              </Button>
             </Box>
           </Stack>
         </Box>
