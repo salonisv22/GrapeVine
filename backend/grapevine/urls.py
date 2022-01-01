@@ -35,15 +35,15 @@ router.register(r'answer', AnswerView)
 urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
-    path('templates/',views.temp, name="temp"),
-    path('login/',
-		jwt_views.TokenObtainPairView.as_view(),
-		name ='token_obtain_pair'),
-	path('token/refresh/',
-		jwt_views.TokenRefreshView.as_view(),
-		name ='token_refresh'),
+    # path('templates/',views.temp, name="temp"),
+    # path('login/',
+	# 	jwt_views.TokenObtainPairView.as_view(),
+	# 	name ='token_obtain_pair'),
+	# path('token/refresh/',
+	# 	jwt_views.TokenRefreshView.as_view(),
+		# name ='token_refresh'),
 	path('', include('authentication.urls')),
-    path('',include('vote.urls')),
+    # path('',include('vote.urls')),
     path('my-questions/', QuestionView.as_view({'get' : 'myQ'}), name='my_questions')
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

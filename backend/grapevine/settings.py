@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # 3rd party
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist', # App to access blackistTokens and outstandingTokens
     
     # local
     'users',
@@ -157,4 +158,4 @@ SIMPLE_JWT = {
 
 # CORS Configuration
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
