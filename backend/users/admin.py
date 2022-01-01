@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
 class CustomUserAdmin(UserAdmin):
-    readonly_fields = [
+    read_only_fields = [
         'password',
     ]
     list_display = [
