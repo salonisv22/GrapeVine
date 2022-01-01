@@ -12,11 +12,8 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super(AnswerSerializer, self).to_representation(instance)
-        print(data)
-        upvotes = len(data['answer_upvoted'])
-        downvotes = len(data['answer_downvoted'])
+        data['upvotes'] = len(data['answer_upvoted'])
+        data['downvotes'] = len(data['answer_downvoted'])
         data.pop('answer_downvoted')
         data.pop('answer_upvoted')
-        data['upvotes'] = upvotes
-        data['downvotes'] = downvotes
         return data

@@ -44,6 +44,6 @@ urlpatterns += [
 		name ='token_refresh'),
 	path('', include('authentication.urls')),
     path('',include('vote.urls')),
-    path('all-questions/', QuestionView.as_view({'get' : 'allQ'}), name='all_questions')
+    path('my-questions/', QuestionView.as_view({'get' : 'myQ'}), name='my_questions')
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
