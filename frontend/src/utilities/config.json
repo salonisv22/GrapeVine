@@ -1,0 +1,6 @@
+{
+  "BASE_URL": "http://localhost:8000/",
+  "POST_HEADER": {
+    "Content-type": "application/json; charset=UTF-8"
+  }
+}

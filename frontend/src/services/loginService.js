@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import config from "../utilities/config.json";
 
 export const login = createApi({
   reducerPath: "login",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "https://ankitkumarbrur.pythonanywhere.com/",
-    baseUrl: "http://localhost:8000/",
+    baseUrl: config.BASE_URL,
   }),
   endpoints: (builder) => ({
     login: builder.mutation({
@@ -12,9 +12,7 @@ export const login = createApi({
         url: "login/",
         method: "POST",
         body: loginCredentials,
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+        headers: config.POST_HEADER,
       }),
     }),
   }),
