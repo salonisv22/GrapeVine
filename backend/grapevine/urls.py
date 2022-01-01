@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 from rest_framework_simplejwt import views as jwt_views
 
+from question.views import QuestionCommentView
+
 from . import views
 from users.views import UserView
 from question.views import QuestionView
@@ -31,6 +33,7 @@ router = routers.SimpleRouter()
 router.register(r'user', UserView)
 router.register(r'question', QuestionView) 
 router.register(r'answer', AnswerView) 
+router.register(r'comment', QuestionCommentView)
 
 urlpatterns = router.urls
 urlpatterns += [
