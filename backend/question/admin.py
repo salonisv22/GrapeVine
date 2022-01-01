@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, QuestionTag
+from .models import *
 # Register your models here.
 
 @admin.register(Question)
@@ -19,3 +19,13 @@ class QuestionTagAdmin(admin.ModelAdmin):
         'tag'
     ]
     ordering = ('tag',)
+
+@admin.register(QuestionComment)
+class QuestionCommentAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'question',
+        'user',
+        'comment'
+    ]
+    ordering = ('commented_at',)

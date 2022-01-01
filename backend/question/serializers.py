@@ -1,11 +1,22 @@
+from django.db import models
+from django.db.models import fields
 from rest_framework import serializers
-from .models import Question, QuestionTag
+from .models import Question, QuestionComment, QuestionTag
 from vote.serializers import DownvoteQSerializer
 from vote.serializers import UpvoteQSerializer
+
+class QuestionCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionComment
+        fields = "__all__"
+        read_only_fields = ['user', 'commented_at']
+
 class QuestionTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionTag
         fields = "__all__"
+
+     
 class QuestionSerializer(serializers.ModelSerializer):
     q_downvoted = DownvoteQSerializer(many=True, read_only=True)
     q_upvoted = UpvoteQSerializer(many=True, read_only=True )
@@ -27,3 +38,6 @@ class QuestionSerializer(serializers.ModelSerializer):
         data['tags'] = tag_list
         return data
 
+class QuestionWithCommentSerializer(QuestionSerializer, serializers.ModelSerializer):
+    comments = QuestionCommentSerializer(many=True, read_only=True)
+    
