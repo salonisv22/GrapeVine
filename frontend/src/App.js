@@ -9,20 +9,26 @@ import Login from "./authentication/login";
 import Register from "./authentication/register";
 import Questions from "./quespage";
 import AllQuestions from "./allQuestions";
+import Header from "./Header";
+import Footer from "./Footer"
 
 const App = () => {
   return (
-    <Routes>
-      <Route index element={<Home />} />
-      <Route path="/" element={<Authentication />}>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Route>
-      <Route path="/question" element={<Questions />} />
-      <Route path="/questions" element={<AllQuestions />} />
+    <>
+      <Header />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/" element={<Authentication />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
+        <Route path="/question" element={<Questions />} />
+        <Route path="/questions" element={<AllQuestions />} />
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer/>
+    </>
   );
 };
 
