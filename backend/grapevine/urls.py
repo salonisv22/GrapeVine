@@ -14,14 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static 
-urlpatterns =[ ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
-from . import views 
-urlpatterns = [
+from rest_framework_simplejwt import views as jwt_views
+
+from . import views
+from users.views import UserView
+from question.views import QuestionView
+from rest_framework import routers
+from answer.views import AnswerView
+
+router = routers.SimpleRouter()
+router.register(r'user', UserView)
+router.register(r'question', QuestionView) 
+router.register(r'answer', AnswerView) 
+
+urlpatterns = router.urls
+urlpatterns += [
     path('admin/', admin.site.urls),
-    path('templates/',views.temp, name="temp")
-]
+	path('', include('authentication.urls')),
+    path('my-questions/', QuestionView.as_view({'get' : 'myQ'}), name='my_questions')
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { useLoginMutation } from "../services/loginService";
 
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
+  const [login, loginData] = useLoginMutation();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(loginData);
+    if (loginData.data && loginData.data.access) {
+      alert("Yay");
+    }
+  }, [loginData]);
 
   return (
     <Box>
@@ -39,7 +48,9 @@ const Login = () => {
               placeholder="Username"
             />
             <TextField
-              onChange={(e) => setPassword(e.target.password)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               size="small"
               variant="outlined"
               label="Password"
@@ -68,7 +79,12 @@ const Login = () => {
               </Link>
             </Box>
             <Box style={{ textAlign: "right" }} display="inline-block">
-              <Button variant="contained">Login</Button>
+              <Button
+                onClick={() => login({ email: username, password: password })}
+                variant="contained"
+              >
+                Login
+              </Button>
             </Box>
           </Stack>
         </Box>

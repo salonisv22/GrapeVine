@@ -7,8 +7,11 @@ import NotFound from "./404";
 import Authentication from "./authentication/";
 import Login from "./authentication/login";
 import Register from "./authentication/register";
+
 import Header from "./Header";
 import Footer from "./Footer"
+import Questions from "./questions/questionByID";
+import AllQuestions from "./questions/questionList";
 
 const App = () => {
   return (
