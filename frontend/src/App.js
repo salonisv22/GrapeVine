@@ -7,22 +7,27 @@ import NotFound from "./404";
 import Authentication from "./authentication/";
 import Login from "./authentication/login";
 import Register from "./authentication/register";
+
+import Header from "./Header";
+import Footer from "./Footer"
 import Questions from "./questions/questionByID";
 import AllQuestions from "./questions/questionList";
 
 const App = () => {
   return (
-    <Routes>
-      <Route index element={<Home />} />
-      <Route path="/" element={<Authentication />}>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Route>
-      <Route path="/question" element={<Questions />} />
-      <Route path="/questions" element={<AllQuestions />} />
+    <>
+      <Header />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/" element={<Authentication />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
 
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer/>
+    </>
   );
 };
 
