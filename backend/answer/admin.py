@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Answer
+from .models import *
 # Register your models here.
 
 @admin.register(Answer)
@@ -10,3 +10,13 @@ class AnswerAdmin(admin.ModelAdmin):
         'answered_at',
     ]
     ordering = ('answered_at', 'id')
+
+@admin.register(AnswerComment)
+class AnswerCommentAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'answer',
+        'user',
+        'comment'
+    ]
+    ordering = ('commented_at',)

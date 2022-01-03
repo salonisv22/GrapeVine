@@ -1,28 +1,28 @@
 from rest_framework import serializers
 from .models import *
 
-class UpvoteQSerializer(serializers.ModelSerializer):
+class UpvoteQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UpvoteQuestion
         fields = "__all__"
         read_only_fields = ['user'] 
 
-class DownvoteQSerializer(serializers.ModelSerializer):
+class DownvoteQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DownvoteQuestion
         fields = "__all__"
         read_only_fields = ['user'] 
     
-class UpvoteASerializer(serializers.ModelSerializer):
+class UpvoteAnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UpvoteAnswer
         fields = "__all__"
         read_only_fields = ['user'] 
 
-class DownvoteASerializer(serializers.ModelSerializer):
+class DownvoteAnswerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DownvoteAnswer

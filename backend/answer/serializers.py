@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from .models import Answer
-from vote.serializers import DownvoteASerializer
-from vote.serializers import UpvoteASerializer
+from .models import *
+from vote.serializers import DownvoteAnswerSerializer
+from vote.serializers import UpvoteAnswerSerializer
+class AnswerCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AnswerComment
+        fields = "__all__"
+        read_only_fields = ['user', 'commented_at']
 class AnswerSerializer(serializers.ModelSerializer):
-    answer_downvoted = DownvoteASerializer(many=True, read_only=True)
-    answer_upvoted = UpvoteASerializer(many=True, read_only=True )
+    answer_downvoted = DownvoteAnswerSerializer(many=True, read_only=True)
+    answer_upvoted = UpvoteAnswerSerializer(many=True, read_only=True )
     class Meta:
         model = Answer
         fields = "__all__"
@@ -17,3 +22,6 @@ class AnswerSerializer(serializers.ModelSerializer):
         data.pop('answer_downvoted')
         data.pop('answer_upvoted')
         return data
+
+class AnswerWithCommentSerializer(AnswerSerializer, serializers.ModelSerializer):
+    comments = AnswerCommentSerializer(many=True, read_only=True)
