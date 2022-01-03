@@ -25,7 +25,6 @@ export default function StickyFooter() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "80vh",
       }}
     >
       <CssBaseline />
@@ -50,7 +49,7 @@ export default function StickyFooter() {
             <Stack spacing={1}>
               <List>
                 <ListItem >
-                  <ListItemText primary="About"></ListItemText>
+                  <ListItemText primary="ABOUT"></ListItemText>
                 </ListItem>
                 <ListItem>
                   <ListItemText secondary="About"></ListItemText>
@@ -63,7 +62,7 @@ export default function StickyFooter() {
             <Stack spacing={1}>
               <List>
                 <ListItem>
-                  <ListItemText primary="About"></ListItemText>
+                  <ListItemText primary="ABOUT"></ListItemText>
                 </ListItem>
                 <ListItem>
                   <ListItemText secondary="About"></ListItemText>
@@ -76,7 +75,7 @@ export default function StickyFooter() {
             <Stack spacing={1}>
               <List>
                 <ListItem>
-                  <ListItemText primary="About"></ListItemText>
+                  <ListItemText primary="ABOUT"></ListItemText>
                 </ListItem>
                 <ListItem>
                   <ListItemText secondary="About"></ListItemText>
