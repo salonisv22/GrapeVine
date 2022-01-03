@@ -17,7 +17,7 @@ class QuestionTag(models.Model):
 
 class QuestionComment(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="comments")
-    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="commentor")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="comments_on_question")
+    user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name="commentor_of_question")
     comment = models.TextField()
     commented_at = models.DateTimeField(default=timezone.now, editable=False)

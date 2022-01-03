@@ -1,6 +1,4 @@
-from rest_framework import serializers, viewsets
-from rest_framework import permissions
-from rest_framework.decorators import permission_classes
+from rest_framework import viewsets
 from authentication.mixins import ViewsetActionPermissionMixin
 from authentication.permissions import IsOwnerOrAdmin
 from rest_framework.permissions import AllowAny
@@ -9,8 +7,6 @@ from .serializers import *
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
-
-import uuid
 
 # Create your views here.
 class QuestionTagView(viewsets.ModelViewSet):
@@ -79,7 +75,7 @@ class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
         serializer = QuestionWithCommentSerializer(instance)
         return Response(serializer.data)
 
-    def myQ(self, request, *args, **kwargs):
+    def myQuestions(self, request, *args, **kwargs):
         objs = Question.objects.filter(Q(user = self.request.user.id))
         queryset = self.filter_queryset(objs)
         serializer = self.get_serializer(queryset, many = True)
