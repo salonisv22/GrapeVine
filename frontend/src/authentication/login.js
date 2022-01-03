@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { useDispatch } from "react-redux";
 
+import { Stack } from "@mui/material";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+
 import { useLoginMutation } from "../services/loginService";
+import { addAlertMessage } from "../redux/alertMessage";
 
 const Login = () => {
   const [username, setUsername] = useState();
@@ -12,20 +15,36 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [login, loginData] = useLoginMutation();
 
+  const [isUsernameValid, setIsUsernameValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (loginData.data && loginData.data.access) {
-      alert("Yay");
+    if (loginData.isError) {
+      dispatch(
+        addAlertMessage({
+          severity: "error",
+          message: loginData.error.data.detail,
+        })
+      );
+    } else if (loginData.isSuccess) {
+      navigate("/home");
     }
-  }, [loginData]);
+  }, [dispatch, navigate, loginData]);
 
   return (
     <Box>
       <h1 style={{ textAlign: "center" }}>GrapeVine</h1>
       <Stack direction={"row"} style={{ padding: "2rem" }}>
-        <Stack>
-          <img alt="" width={300} src="/assets/login.svg" />
+        <Stack justifyContent={"space-around"} sx={{ width: "350px" }}>
+          <img
+            style={{ alignSelf: "center" }}
+            alt=""
+            width={300}
+            src="/assets/login.svg"
+          />
           <Box display="inline-block" style={{ paddingTop: "1rem" }}>
             <Link
               component="button"
@@ -36,19 +55,31 @@ const Login = () => {
             </Link>
           </Box>
         </Stack>
-        <Box sx={{ padding: "0px 35px 35px 35px" }}>
+        <Box sx={{ width: "22vw", height: "65vh", padding: "0px 35px 0 35px" }}>
           <h2>Welcome Back</h2>
           <Stack spacing={2}>
             <TextField
-              onChange={(e) => setUsername(e.target.value)}
+              required
+              onChange={(e) => {
+                if (e.target.value === "") setIsUsernameValid(false);
+                else setIsUsernameValid(true);
+                setUsername(e.target.value);
+              }}
               size="small"
               value={username}
               variant="outlined"
               label="Username"
               placeholder="Username"
+              error={!isUsernameValid}
+              helperText={
+                isUsernameValid ? undefined : "This is a required field"
+              }
             />
             <TextField
+              required
               onChange={(e) => {
+                if (e.target.value === "") setIsPasswordValid(false);
+                else setIsPasswordValid(true);
                 setPassword(e.target.value);
               }}
               size="small"
@@ -57,6 +88,10 @@ const Login = () => {
               placeholder="Password"
               type={showPassword ? "text" : "password"}
               value={password}
+              error={!isPasswordValid}
+              helperText={
+                isPasswordValid ? undefined : "This is a required field"
+              }
               InputProps={{
                 endAdornment: (
                   <IconButton
@@ -80,7 +115,15 @@ const Login = () => {
             </Box>
             <Box style={{ textAlign: "right" }} display="inline-block">
               <Button
-                onClick={() => login({ email: username, password: password })}
+                onClick={() => {
+                  if (username === "" || username === undefined)
+                    setIsUsernameValid(false);
+                  if (password === "" || username === undefined)
+                    setIsPasswordValid(false);
+
+                  if (isUsernameValid && isPasswordValid)
+                    login({ email: username, password: password });
+                }}
                 variant="contained"
               >
                 Login
