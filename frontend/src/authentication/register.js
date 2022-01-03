@@ -23,13 +23,12 @@ const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isUsernameValid, setIsUsernameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(true);
 
-  const passwordsMatch =
-    password === undefined ||
-    password === "" ||
-    confirmPassword === undefined ||
-    confirmPassword === "" ||
-    password === confirmPassword;
+  const [emailHelperText, setEmailHelperText] = useState();
+  const [usernameHelperText, setUsernameHelperText] = useState();
+  const [passwordHelperText, setPasswordHelperText] = useState();
+  const [confirmPasswordHelperText, setConfirmPasswordHelperText] = useState();
 
   useEffect(() => {
     if (createUserData.isError) {
@@ -78,14 +77,18 @@ const Register = () => {
           <h2>Create a new account</h2>
           <Stack spacing={2}>
             <TextField
+              required
               onChange={(e) => {
-                if (!isUsernameValid)
-                  setIsUsernameValid(
-                    String(e.target.value)
-                      .toLowerCase()
-                      .match(/^[a-zA-Z0-9_]{3,}[a-zA-Z0-9_]*$/)
-                  );
                 setUsername(e.target.value);
+                if (!isUsernameValid) {
+                  const validUsername = String(e.target.value)
+                    .toLowerCase()
+                    .match(/^[a-zA-Z0-9_]{3,}[a-zA-Z0-9_]*$/);
+                  setIsUsernameValid(validUsername);
+                  setUsernameHelperText(
+                    "Username should contain only alphanumerics or undescore and have atleast 3 characters"
+                  );
+                }
               }}
               size="small"
               value={username}
@@ -93,33 +96,34 @@ const Register = () => {
               label="Username"
               placeholder="Username"
               error={!isUsernameValid}
-              helperText={
-                isUsernameValid ? undefined : (
-                  <>
-                    Username should contain only alphanumerics or
-                    <br /> underscore and have atleast 3 characters
-                  </>
-                )
-              }
+              helperText={isUsernameValid ? undefined : usernameHelperText}
               onBlur={() => {
-                setIsUsernameValid(
-                  String(username)
-                    .toLowerCase()
-                    .match(/^[a-zA-Z0-9_]{3,}[a-zA-Z0-9_]*$/)
-                );
+                const validUsername = String(username)
+                  .toLowerCase()
+                  .match(/^[a-zA-Z0-9_]{3,}[a-zA-Z0-9_]*$/);
+                setIsUsernameValid(validUsername);
+                if (!validUsername)
+                  setUsernameHelperText(
+                    <>
+                      Username should contain only alphanumerics or undescore{" "}
+                      <br /> and have atleast 3 characters
+                    </>
+                  );
               }}
             />
             <TextField
+              required
               onChange={(e) => {
                 setEmail(e.target.value);
-                if (!isEmailValid)
-                  setIsEmailValid(
-                    String(e.target.value)
-                      .toLowerCase()
-                      .match(
-                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                      )
-                  );
+                if (!isEmailValid) {
+                  const validEmail = String(e.target.value)
+                    .toLowerCase()
+                    .match(
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    );
+                  setIsEmailValid(validEmail);
+                  if (!validEmail) setEmailHelperText("Enter a valid email");
+                }
               }}
               size="small"
               value={email}
@@ -127,21 +131,27 @@ const Register = () => {
               label="Email Address"
               placeholder="Email Address"
               error={!isEmailValid}
-              helperText={isEmailValid ? undefined : "Enter a valid email"}
+              helperText={isEmailValid ? undefined : emailHelperText}
               onBlur={() => {
-                setIsEmailValid(
-                  String(email)
-                    .toLowerCase()
-                    .match(
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                    )
-                );
+                const validEmail = String(email)
+                  .toLowerCase()
+                  .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                  );
+
+                setIsEmailValid(validEmail);
+                if (!validEmail) setEmailHelperText("Enter a valid email");
               }}
             />
             <TextField
+              required
               onChange={(e) => {
-                if (!isPasswordValid)
-                  setIsPasswordValid(e.target.value.length >= 6);
+                if (!isPasswordValid) {
+                  const validPassword = e.target.value.length >= 6;
+                  setIsPasswordValid(validPassword);
+                  if (!validPassword)
+                    setPasswordHelperText("Password is not valid");
+                }
                 setPassword(e.target.value);
               }}
               size="small"
@@ -151,10 +161,13 @@ const Register = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               error={!isPasswordValid}
-              helperText={<>Password should have atleast 6 characters</>}
-              onBlur={() =>
-                setIsPasswordValid(password && password.length >= 6)
-              }
+              helperText={isPasswordValid ? undefined : passwordHelperText}
+              onBlur={() => {
+                const isPasswordValid = password.length >= 6;
+                setIsPasswordValid(isPasswordValid);
+                if (!isPasswordValid)
+                  setPasswordHelperText("Password is not valid");
+              }}
               InputProps={{
                 endAdornment: (
                   <IconButton
@@ -172,15 +185,30 @@ const Register = () => {
               }}
             />
             <TextField
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                const passwordsMatch =
+                  password === undefined ||
+                  password === "" ||
+                  e.target.value === undefined ||
+                  e.target.value === "" ||
+                  password === e.target.value;
+                if (!passwordsMatch) {
+                  setIsConfirmPasswordValid(passwordsMatch);
+                  setConfirmPasswordHelperText("Passwords don't match");
+                }
+              }}
               size="small"
               variant="outlined"
               label="Confirm Password"
               placeholder="Confirm Password"
               type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
-              error={!passwordsMatch}
-              helperText={passwordsMatch ? undefined : "Passwords don't match"}
+              error={!isConfirmPasswordValid}
+              helperText={
+                isConfirmPasswordValid ? undefined : confirmPasswordHelperText
+              }
               InputProps={{
                 endAdornment: (
                   <IconButton
@@ -201,13 +229,34 @@ const Register = () => {
               <Button
                 onClick={() => {
                   let message = undefined;
+                  let allRequiredSet = true;
+                  if (username === undefined || username === "") {
+                    setIsUsernameValid(false);
+                    setUsernameHelperText("This field is required");
+                    allRequiredSet = false;
+                  }
+                  if (email === undefined || email === "") {
+                    setIsEmailValid(false);
+                    setEmailHelperText("This field is required");
+                    allRequiredSet = false;
+                  }
+                  if (password === undefined || password === "") {
+                    setIsPasswordValid(false);
+                    setPasswordHelperText("This field is required");
+                    allRequiredSet = false;
+                  }
+                  if (confirmPassword === undefined || confirmPassword === "") {
+                    setIsConfirmPasswordValid(false);
+                    setConfirmPasswordHelperText("This field is required");
+                    allRequiredSet = false;
+                  }
                   if (!isUsernameValid) {
                     message = "Username is not valid";
                   } else if (!isEmailValid) {
                     message = "Email is not valid";
-                  } else if (!isPasswordValid || password === undefined) {
+                  } else if (!isPasswordValid) {
                     message = "Password is not valid";
-                  } else if (confirmPassword === undefined || !passwordsMatch) {
+                  } else if (!isConfirmPasswordValid) {
                     message = "Passwords don't match";
                   }
                   if (message !== undefined) {
@@ -217,7 +266,7 @@ const Register = () => {
                         message: message,
                       })
                     );
-                  } else {
+                  } else if (allRequiredSet) {
                     createUser({
                       username: username,
                       email: email,
