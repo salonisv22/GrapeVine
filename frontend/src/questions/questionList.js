@@ -1,4 +1,5 @@
 import { questions } from "./ques";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Container,
   Divider,
@@ -12,10 +13,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Stack } from "@mui/material";
 import AddIcon from "@material-ui/icons/Add";
-
 import TagList from "./components/tagList";
 
 const AllQuestions = () => {
+
+
   return (
     <>
       <Container>
@@ -45,6 +47,8 @@ const AllQuestions = () => {
             size="small"
             color="primary"
             aria-label="add"
+            to="ask"
+            component={RouterLink}
           >
             <AddIcon />
             Ask Question
@@ -79,7 +83,11 @@ const AllQuestions = () => {
                   </List>
                   <div className="Question">
                     <h3>{title}</h3>
-                    <p>{description}</p>
+                    <typography
+                     className="RestrictText"
+                    >
+                      {description}
+                    </typography>
                     <Stack direction="row" spacing={0.5}>
                       <TagList tags={tags} />
                     </Stack>

@@ -15,7 +15,7 @@ import { Stack } from "@mui/material";
 const headersData = [
   {
     label: "Questions",
-    href: "/Questions",
+    href: "/questions",
   },
   {
     label: "About",
@@ -118,7 +118,7 @@ export default function Header() {
 
   return (
     <header>
-      <AppBar>{displayDesktop()}</AppBar>
+      <AppBar position="relative">{displayDesktop()}</AppBar>
     </header>
   );
 }
