@@ -9,6 +9,9 @@ import { useCreateUserMutation } from "../services/usersService";
 import { addAlertMessage } from "../redux/alertMessage";
 
 const Register = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -21,9 +24,6 @@ const Register = () => {
   const [isUsernameValid, setIsUsernameValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const passwordsMatch =
     password === undefined ||
     password === "" ||
@@ -32,17 +32,38 @@ const Register = () => {
     password === confirmPassword;
 
   useEffect(() => {
-    if (createUserData.isSuccess) {
+    if (createUserData.isError) {
+      const { username, email, password } = createUserData.error.data;
+      const message = username || email || password;
+      if (createUserData.error.data)
+        dispatch(
+          addAlertMessage({
+            severity: "error",
+            message: message,
+          })
+        );
+    } else if (createUserData.isSuccess) {
       navigate("/login");
+      dispatch(
+        addAlertMessage({
+          severity: "info",
+          message: "User created Successfully",
+        })
+      );
     }
-  }, [createUserData, navigate]);
+  }, [createUserData, dispatch, navigate]);
 
   return (
     <Box>
       <h1 style={{ textAlign: "center" }}>GrapeVine</h1>
       <Stack direction={"row"} style={{ padding: "2rem" }}>
-        <Stack>
-          <img alt="" width={300} src="/assets/login.svg" />
+        <Stack justifyContent={"space-around"} sx={{ width: "350px" }}>
+          <img
+            style={{ alignSelf: "center" }}
+            alt=""
+            width={300}
+            src="/assets/register.svg"
+          />
           <Box display="inline-block" style={{ paddingTop: "1rem" }}>
             <Link
               component="button"
@@ -53,7 +74,7 @@ const Register = () => {
             </Link>
           </Box>
         </Stack>
-        <Box sx={{ padding: "0px 35px 35px 35px" }}>
+        <Box sx={{ width: "22vw", height: "65vh", padding: "0px 35px 0 35px" }}>
           <h2>Create a new account</h2>
           <Stack spacing={2}>
             <TextField
@@ -131,7 +152,9 @@ const Register = () => {
               value={password}
               error={!isPasswordValid}
               helperText={<>Password should have atleast 6 characters</>}
-              onBlur={() => setIsPasswordValid(password.length >= 6)}
+              onBlur={() =>
+                setIsPasswordValid(password && password.length >= 6)
+              }
               InputProps={{
                 endAdornment: (
                   <IconButton
@@ -177,20 +200,29 @@ const Register = () => {
             <Box style={{ textAlign: "right" }} display="inline-block">
               <Button
                 onClick={() => {
-                  if (passwordsMatch) {
+                  let message = undefined;
+                  if (!isUsernameValid) {
+                    message = "Username is not valid";
+                  } else if (!isEmailValid) {
+                    message = "Email is not valid";
+                  } else if (!isPasswordValid || password === undefined) {
+                    message = "Password is not valid";
+                  } else if (confirmPassword === undefined || !passwordsMatch) {
+                    message = "Passwords don't match";
+                  }
+                  if (message !== undefined) {
+                    dispatch(
+                      addAlertMessage({
+                        severity: "error",
+                        message: message,
+                      })
+                    );
+                  } else {
                     createUser({
                       username: username,
                       email: email,
                       password: password,
                     });
-                  } else {
-                    dispatch(
-                      addAlertMessage({
-                        isVisible: true,
-                        severity: "warning",
-                        message: "Passwords don't match!",
-                      })
-                    );
                   }
                 }}
                 variant="contained"

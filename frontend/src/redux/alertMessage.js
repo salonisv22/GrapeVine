@@ -9,12 +9,11 @@ export const alertMessage = createSlice({
   },
   reducers: {
     addAlertMessage: (state, action) => {
+      state.isVisible = true;
       state.severity = action.payload.severity;
-      state.isVisible = action.payload.isVisible;
       state.message = action.payload.message;
     },
     hideAlertMessage: (state, action) => {
-      console.log("hideAlertMessage");
       state.isVisible = false;
     },
   },
