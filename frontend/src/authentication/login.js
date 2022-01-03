@@ -30,6 +30,7 @@ const Login = () => {
         })
       );
     } else if (loginData.isSuccess) {
+      localStorage.setItem("grapevine", loginData.data.access);
       navigate("/home");
     }
   }, [dispatch, navigate, loginData]);
@@ -116,12 +117,14 @@ const Login = () => {
             <Box style={{ textAlign: "right" }} display="inline-block">
               <Button
                 onClick={() => {
-                  if (username === "" || username === undefined)
-                    setIsUsernameValid(false);
-                  if (password === "" || username === undefined)
-                    setIsPasswordValid(false);
+                  const validUsername =
+                    username !== "" && username !== undefined;
+                  const validPassword =
+                    password !== "" && username !== undefined;
+                  setIsUsernameValid(validUsername);
+                  setIsPasswordValid(validPassword);
 
-                  if (isUsernameValid && isPasswordValid)
+                  if (validPassword && validUsername)
                     login({ email: username, password: password });
                 }}
                 variant="contained"
