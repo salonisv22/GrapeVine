@@ -1,13 +1,28 @@
 from rest_framework import viewsets
+
+from authentication.permissions import IsOwnerOrAdmin
 from .models import Users
 from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.db.models import Q
 # Create your views here.
 
 class UserView(viewsets.ModelViewSet):
     queryset = Users.objects.all()
     serializer_class = UserSerializer
+    permissions_classes = [IsOwnerOrAdmin]
+    action_based_permission_classes = {
+        'list':[AllowAny],
+        'retrieve': [AllowAny],
+        'create': [IsAuthenticated]
+    }
+
+    def me(self, request, *args, **kwargs):
+        instance = Users.objects.filter(Q(id = self.request.user.id))[0]
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
         serializer.save(is_active = True)

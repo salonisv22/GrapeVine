@@ -41,9 +41,10 @@ router.register(r'answer-comment', AnswerCommentView)
 urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
-	path('', include('authentication.urls')),
-    path('',include('vote.urls')),
+	path('me/', UserView.as_view({'get' : 'me'}), name='me'),
     path('my-questions/', QuestionView.as_view({'get' : 'myQuestions'}), name='my_questions'),
-    path('my-answers/', AnswerView.as_view({'get' : 'myAnswerss'}), name='my_answers')
+    path('my-answers/', AnswerView.as_view({'get' : 'myAnswerss'}), name='my_answers'),
+    path('', include('authentication.urls')),
+    path('',include('vote.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
