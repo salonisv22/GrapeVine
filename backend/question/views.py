@@ -83,14 +83,16 @@ class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED, headers=headers)
 
     def create(self, request, *args, **kwargs ):
-        question = QuestionSerializer(data=request.data,context={'request': request})
+        question = self.get_serializer(data=request.data)
         if question.is_valid():
             question_object = question.save(user = self.request.user)
             if request.data.get('tag_list', False):
-                QuestionTagView.addTag( request, question_object, *args, **kwargs)
-            return Response(data = {'question':question.data.id}, status=status.HTTP_201_CREATED)
+                QuestionTagView.addTag( request, question_object.id, *args, **kwargs)
+            return Response(data = {'question':question.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(question.errors)
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
