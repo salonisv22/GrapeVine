@@ -21,21 +21,30 @@ from django.conf.urls.static import static
 
 from rest_framework_simplejwt import views as jwt_views
 
+from question.views import QuestionCommentView
+
 from . import views
 from users.views import UserView
 from question.views import QuestionView
 from rest_framework import routers
 from answer.views import AnswerView
+from answer.views import AnswerCommentView
 
 router = routers.SimpleRouter()
 router.register(r'user', UserView)
 router.register(r'question', QuestionView) 
 router.register(r'answer', AnswerView) 
+router.register(r'question-comment', QuestionCommentView)
+router.register(r'answer-comment', AnswerCommentView)
+
 
 urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
-	path('', include('authentication.urls')),
-    path('my-questions/', QuestionView.as_view({'get' : 'myQ'}), name='my_questions')
+	path('me/', UserView.as_view({'get' : 'me'}), name='me'),
+    path('my-questions/', QuestionView.as_view({'get' : 'myQuestions'}), name='my_questions'),
+    path('my-answers/', AnswerView.as_view({'get' : 'myAnswerss'}), name='my_answers'),
+    path('', include('authentication.urls')),
+    path('',include('vote.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

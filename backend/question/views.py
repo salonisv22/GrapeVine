@@ -1,16 +1,12 @@
-from rest_framework import serializers, viewsets
-from rest_framework import permissions
-from rest_framework.decorators import permission_classes
+from rest_framework import viewsets
 from authentication.mixins import ViewsetActionPermissionMixin
 from authentication.permissions import IsOwnerOrAdmin
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
-from .models import Question, QuestionTag
-from .serializers import QuestionSerializer, QuestionTagSerializer
-from django.db.models import Q, query
+from rest_framework.permissions import AllowAny
+from .models import *
+from .serializers import *
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
-
-import uuid
 
 # Create your views here.
 class QuestionTagView(viewsets.ModelViewSet):
@@ -35,16 +31,51 @@ class QuestionTagView(viewsets.ModelViewSet):
         cls.deleteTag(request, question, *args, **kwargs)
         cls.addTag(request, question, *args, **kwargs)
 
+class QuestionCommentView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
+    queryset = QuestionComment.objects.all()
+    serializer_class = QuestionCommentSerializer
+    permission_classes = [IsOwnerOrAdmin]
+    action_based_permission_classes = {
+        'list':[AllowAny],
+        'retrieve': [AllowAny],
+    }
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
 class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     permission_classes = [IsOwnerOrAdmin]
     action_based_permission_classes = {
-        'get':[AllowAny],
+        'list':[AllowAny],
         'retrieve': [AllowAny],
     }
 
-    def myQ(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = QuestionWithCommentSerializer(instance)
+        return Response(serializer.data)
+
+    def myQuestions(self, request, *args, **kwargs):
         objs = Question.objects.filter(Q(user = self.request.user.id))
         queryset = self.filter_queryset(objs)
         serializer = self.get_serializer(queryset, many = True)
@@ -52,14 +83,16 @@ class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED, headers=headers)
 
     def create(self, request, *args, **kwargs ):
-        question = QuestionSerializer(data=request.data,context={'request': request})
+        question = self.get_serializer(data=request.data)
         if question.is_valid():
             question_object = question.save(user = self.request.user)
             if request.data.get('tag_list', False):
-                QuestionTagView.addTag( request, question_object, *args, **kwargs)
-            return Response(data = {'question':question.data.id}, status=status.HTTP_201_CREATED)
+                QuestionTagView.addTag( request, question_object.id, *args, **kwargs)
+            return Response(data = {'question':question.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(question.errors)
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
@@ -79,9 +112,5 @@ class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
             QuestionTagView.deleteTag(request, question_object.id, *args, **kwargs)
         return Response(serializer.data)
 
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        QuestionTagView.deleteTag(request, instance.id, *args, **kwargs)    
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+  
   
