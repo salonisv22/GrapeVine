@@ -6,7 +6,7 @@ import { Stack } from "@mui/material";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
-import { useLoginMutation } from "../services/loginService";
+import { useLoginMutation } from "../services/authenticationApi";
 import { addAlertMessage } from "../redux/alertMessage";
 
 const Login = () => {
