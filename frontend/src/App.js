@@ -5,6 +5,7 @@ import "./app.scss";
 import Home from "./homepage";
 import NotFound from "./404";
 import Authentication from "./authentication/";
+import Profile from "./profile/";
 import Login from "./authentication/login";
 import Register from "./authentication/register";
 import AskQuestion from "./AskQuestion";
@@ -20,15 +21,15 @@ const App = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
-        <Route path="/" element={<MainLayout/>}>
+        <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/question" element={<Questions />} />
           <Route path="/questions/ask" element={<AskQuestion />} />
           <Route path="/questions" element={<AllQuestions />} />
+          <Route path="/profile/" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-  
     </>
   );
 };
