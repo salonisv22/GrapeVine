@@ -8,14 +8,10 @@ export const users = createApi({
   }),
   endpoints: (builder) => ({
     createUser: builder.mutation({
-      query: () => ({
-        url: "users/",
+      query: (newUser) => ({
+        url: "user/",
         method: "POST",
-        body: {
-          username: "ankitb",
-          password: "salpal",
-          email: "ankitb@salpal.com",
-        },
+        body: newUser,
         header: config.POST_HEADER,
       }),
     }),
