@@ -156,6 +156,9 @@ SIMPLE_JWT = {
     # 'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=30),
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=2),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'ROTATE_REFRESH_TOKENS': True,
+    
+    # 'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
 }
 
 # CORS Configuration

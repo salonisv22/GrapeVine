@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "../utilities/config.json";
+import { baseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const login = createApi({
   reducerPath: "login",
@@ -27,15 +28,13 @@ export const login = createApi({
     }),
     logout: builder.mutation({
       query: () => {
-        console.log("logging out");
         localStorage.removeItem("grapevine");
-        document.cookie =
-          "refresh=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
         return {
           url: "logout/",
           method: "POST",
           body: {},
           headers: config.POST_HEADER,
+          credentials: "include",
         };
       },
     }),
@@ -44,9 +43,7 @@ export const login = createApi({
 
 export const validateSelf = createApi({
   reducerPath: "me",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.BASE_URL,
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     validateSelf: builder.query({
       query: () => ({
