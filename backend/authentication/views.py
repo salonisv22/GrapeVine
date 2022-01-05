@@ -9,18 +9,20 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenOb
 
 # Create your views here.
 class BlacklistTokenView(GenericAPIView):
-    permission_classes = [permissions.AllowAny,]
-    # permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.AllowAny,]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         try:
             if 'refresh' not in request.data:
                 if 'refresh' in request.COOKIES:
                     request.data['refresh'] = request.COOKIES.get('refresh', None)
-
-            refresh_token = request.data["refresh"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
+                    
+            refresh_token = request.data.get("refresh", None)
+            try:
+                RefreshToken(refresh_token).blacklist()
+            except TokenError:
+                pass
 
             response = Response({"message" : "Logout Successful"}, status = 200)
             response.delete_cookie('refresh')
@@ -30,8 +32,8 @@ class BlacklistTokenView(GenericAPIView):
             return Response(status = status.HTTP_400_BAD_REQUEST)
 
 class Force_Logout_View(GenericAPIView):
-    permission_classes = [permissions.AllowAny,]
-    # permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.AllowAny,]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         try:
@@ -50,8 +52,12 @@ class Force_Logout_View(GenericAPIView):
 
 
 def fetch_and_set_tokens(self, request):                    
-    serializer = self.serializer_class(data=request.data)
-    serializer.is_valid(raise_exception = True)
+    serializer = self.serializer_class(data = request.data)
+    
+    try:
+        serializer.is_valid(raise_exception = True)
+    except:
+        return Response({"error" : "Invalid Token" }, status = 401)
 
     if 'access' in serializer.validated_data and 'refresh' in serializer.validated_data:
         data = serializer.validated_data
@@ -87,5 +93,7 @@ class MyTokenRefreshView(TokenRefreshView):
         if 'refresh' not in request.data:
             if 'refresh' in request.COOKIES:
                 request.data['refresh'] = request.COOKIES.get('refresh', None)
+        
+        print("WE ARE HERE")
 
         return fetch_and_set_tokens(self, request)    

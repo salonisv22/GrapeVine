@@ -1,8 +1,16 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Box, Card, Grid } from "@material-ui/core";
 
 const Authentication = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("grapevine")) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <Grid
       container

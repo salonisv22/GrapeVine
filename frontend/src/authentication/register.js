@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { TextField, Box, IconButton, Link, Button } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 
-import { useCreateUserMutation } from "../services/usersService";
+import { useCreateUserMutation } from "../services/usersApi";
 import { addAlertMessage } from "../redux/alertMessage";
 
 const Register = () => {
@@ -163,7 +163,7 @@ const Register = () => {
               error={!isPasswordValid}
               helperText={isPasswordValid ? undefined : passwordHelperText}
               onBlur={() => {
-                const isPasswordValid = password.length >= 6;
+                const isPasswordValid = password && password.length >= 6;
                 setIsPasswordValid(isPasswordValid);
                 if (!isPasswordValid)
                   setPasswordHelperText("Password is not valid");
@@ -194,10 +194,8 @@ const Register = () => {
                   e.target.value === undefined ||
                   e.target.value === "" ||
                   password === e.target.value;
-                if (!passwordsMatch) {
-                  setIsConfirmPasswordValid(passwordsMatch);
-                  setConfirmPasswordHelperText("Passwords don't match");
-                }
+                setIsConfirmPasswordValid(passwordsMatch);
+                setConfirmPasswordHelperText("Passwords don't match");
               }}
               size="small"
               variant="outlined"
