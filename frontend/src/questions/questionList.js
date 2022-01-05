@@ -1,5 +1,6 @@
+import { useQuestionListQuery } from "../services/QuestionsService";
 import { questions } from "./ques";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink,useNavigate } from "react-router-dom";
 import {
   Container,
   Divider,
@@ -16,8 +17,9 @@ import AddIcon from "@material-ui/icons/Add";
 import TagList from "./components/tagList";
 
 const AllQuestions = () => {
-
-
+  const { data, error, isLoading } = useQuestionListQuery();
+  const navigate = useNavigate();
+  console.log(data);
   return (
     <>
       <Container>
@@ -56,9 +58,8 @@ const AllQuestions = () => {
         </Stack>
         <br />
         <Divider />
-        {questions.map((question) => {
-          const { tags, title, description, upvote_count, downvote_count } =
-            question;
+        {data?.map((question) => {
+          const { id, tags, query_title, query, upvotes, downvotes } = question;
           return (
             <>
               <Container className="QuestionList">
@@ -68,7 +69,7 @@ const AllQuestions = () => {
                       <ListItemText
                         className="QuestionInsightText"
                         edge="end"
-                        primary={upvote_count + downvote_count}
+                        primary={upvotes + downvotes}
                         secondary="Votes"
                       />
                     </ListItem>
@@ -76,18 +77,16 @@ const AllQuestions = () => {
                       <ListItemText
                         className="QuestionInsightText"
                         edge="end"
-                        primary={upvote_count + downvote_count}
+                        primary={upvotes + downvotes}
                         secondary="Answers"
                       />
                     </ListItem>
                   </List>
                   <div className="Question">
-                    <h3>{title}</h3>
-                    <typography
-                     className="RestrictText"
-                    >
-                      {description}
-                    </typography>
+                    <h3 onClick={() => { navigate(`${id}`) }}>
+                      {query_title}
+                    </h3>
+                    <typography className="RestrictText">{query}</typography>
                     <Stack direction="row" spacing={0.5}>
                       <TagList tags={tags} />
                     </Stack>

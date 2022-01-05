@@ -34,6 +34,10 @@ export default function StickyFooter() {
           py: 3,
           px: 2,
           mt: "auto",
+          position: "sticky",
+          marginTop:3,
+          bottom: 0,
+          width:"100%",
           backgroundColor: "#3f51b5",
         }}
       >
@@ -48,7 +52,7 @@ export default function StickyFooter() {
           >
             <Stack spacing={1}>
               <List>
-                <ListItem >
+                <ListItem>
                   <ListItemText primary="ABOUT"></ListItemText>
                 </ListItem>
                 <ListItem>
