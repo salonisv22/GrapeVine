@@ -15,7 +15,7 @@ import { Stack } from "@mui/material";
 const headersData = [
   {
     label: "Questions",
-    href: "/questions",
+    href: "/question",
   },
   {
     label: "About",
@@ -26,8 +26,8 @@ const headersData = [
     href: "/account",
   },
   {
-    label: "Log Out",
-    href: "/logout",
+    label: "Log In",
+    href: "/login",
   },
 ];
 

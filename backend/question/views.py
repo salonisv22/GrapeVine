@@ -56,8 +56,8 @@ class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
         if question.is_valid():
             question_object = question.save(user = self.request.user)
             if request.data.get('tag_list', False):
-                QuestionTagView.addTag( request, question_object, *args, **kwargs)
-            return Response(data = {'question':question.data.id}, status=status.HTTP_201_CREATED)
+                QuestionTagView.addTag( request, question_object.id, *args, **kwargs)
+            return Response(data = {'question':question.data}, status=status.HTTP_201_CREATED)
         else:
             return Response(question.errors)
 
