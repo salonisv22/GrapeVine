@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { login, validateSelf } from "../services/authenticationApi";
 import { users } from "../services/usersApi";
 import alertMessage from "./alertMessage";
+import { Questions } from "../services/QuestionsService";
 
 import { isRejectedWithValue } from "@reduxjs/toolkit";
 // import { toast } from 'your-cool-library'
@@ -26,6 +27,7 @@ export const store = configureStore({
     [login.reducerPath]: login.reducer,
     [validateSelf.reducerPath]: validateSelf.reducer,
     [users.reducerPath]: users.reducer,
+    [Questions.reducerPath]:Questions.reducer,
     alertMessage: alertMessage,
   },
   middleware: (getDefaultMiddleware) =>

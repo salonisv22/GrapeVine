@@ -39,10 +39,9 @@ const App = () => {
         </Route>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="/question" element={<Questions />} />
-          <Route path="/questions/ask" element={<AskQuestion />} />
-          <Route path="/questions" element={<AllQuestions />} />
-          <Route path="/profile/" element={<Profile />} />
+          <Route path="/question/:id" element={<Questions />} />
+          <Route path="/question/ask" element={<AskQuestion />} />
+          <Route path="/question" element={<AllQuestions />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
