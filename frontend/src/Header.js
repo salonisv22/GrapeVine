@@ -23,7 +23,7 @@ const headersData = [
   },
   {
     label: "My Account",
-    href: "/account",
+    href: "/profile",
   },
   {
     label: "Log In",
