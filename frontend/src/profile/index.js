@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Avatar, Stack, Tab } from "@mui/material";
+import { Avatar, Stack, Tab, List } from "@mui/material";
 import { Box, Card, Grid } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
@@ -8,6 +8,14 @@ import {
   NotificationsActiveOutlined,
 } from "@material-ui/icons";
 import MyProfile from "./profile";
+import Notification from "./notification";
+import Setting from "./setting";
+
+import { ListItem, Typography } from "@mui/material";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import { Cake, Email, AccessTime } from "@material-ui/icons";
+
 const Profile = () => {
   const [value, setValue] = React.useState("1");
 
@@ -21,30 +29,55 @@ const Profile = () => {
         spacing={0}
         direction="column"
         alignItems="center"
-        justifyContent="center"
         style={{ minHeight: "100vh" }}
       >
         <Grid item>
           <Box>
-            <Stack
-              direction="column"
-              justifyContent="center"
-              alignItems="flex-end"
-              my={2}
-            >
+            <Stack direction="row" spacing={2} alignItems="center" my={2}>
               <Avatar
-                sx={{ width: 50, height: 50 }}
+                sx={{ backgroundColor: "#3f51b5", width: 120, height: 120 }}
                 alt="Cindy Baker"
-                src="/assets/avatar.svg"
-              />{" "}
+                variant="square"
+              >
+                {" "}
+                <h2>S</h2>
+              </Avatar>
+              <Stack direction="column" spacing={1}>
+                <div>
+                  <Typography variant="h4">Saloni</Typography>
+                  <Typography sx={{ opacity: 0.8 }} variant="subtitle2">
+                    Student
+                  </Typography>
+                </div>
+                <Stack
+                  direction="row"
+                  spacing={3}
+                  sx={{
+                    width: "100%",
+                    bgcolor: "background.paper",
+                    opacity: 0.6,
+                  }}
+                >
+                  <Stack alignContent={"center"} direction="row" spacing={1}>
+                    <Email />
+                    <div>salonisv22@gmail.com</div>
+                  </Stack>
+                  <Stack alignContent={"center"} direction="row" spacing={1}>
+                    <Cake />
+                    <div>Member from 1 december, 2020</div>
+                  </Stack>
+                  <Stack alignContent={"center"} direction="row" spacing={1}>
+                    <AccessTime />
+                    <div>Last Active 5 december, 2020</div>
+                  </Stack>
+                </Stack>
+              </Stack>
             </Stack>
           </Box>
           <Box display="inline-block">
             <Card variant="outlined">
               <Box sx={{ width: "100%" }}>
-                <Box
-                  sx={{ width: "80vw", height: "70vh", typography: "body1" }}
-                >
+                <Box sx={{ width: "90vw", typography: "body1" }}>
                   <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                       <TabList
@@ -72,8 +105,12 @@ const Profile = () => {
                     <TabPanel value="1">
                       <MyProfile />
                     </TabPanel>
-                    <TabPanel value="2">Item Two</TabPanel>
-                    <TabPanel value="3">Item Three</TabPanel>
+                    <TabPanel value="2">
+                      <Notification />
+                    </TabPanel>
+                    <TabPanel value="3">
+                      <Setting />
+                    </TabPanel>
                   </TabContext>
                 </Box>
               </Box>
