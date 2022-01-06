@@ -1,9 +1,6 @@
 import React from "react";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Stack from "@mui/material/Stack";
-import { ListItem, Typography } from "@mui/material";
-import { Box, Divider } from "@material-ui/core";
+import { Alert, AlertTitle, Stack, Typography } from "@mui/material";
+import { Divider } from "@material-ui/core";
 
 const notifications = [
   {

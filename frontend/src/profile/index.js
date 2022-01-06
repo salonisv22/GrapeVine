@@ -1,20 +1,18 @@
 import * as React from "react";
-import { Avatar, Stack, Tab, List } from "@mui/material";
+import { Avatar, Stack, Tab, Typography } from "@mui/material";
 import { Box, Card, Grid } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   AccountCircleOutlined,
   SettingsOutlined,
   NotificationsActiveOutlined,
+  Cake,
+  Email,
+  AccessTime,
 } from "@material-ui/icons";
 import MyProfile from "./profile";
 import Notification from "./notification";
 import Setting from "./setting";
-
-import { ListItem, Typography } from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import { Cake, Email, AccessTime } from "@material-ui/icons";
 
 const Profile = () => {
   const [value, setValue] = React.useState("1");

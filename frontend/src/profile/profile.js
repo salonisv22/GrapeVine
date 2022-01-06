@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import List from "@mui/material/List";
-import { ListItem, Typography } from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import { Person, Email } from "@material-ui/icons";
-import { Avatar, Tab } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  Tab,
+  TableRow,
+} from "@mui/material";
 import { Box, Divider } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Question from "./../questions/questionByID";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 const summary = (
   <>
     <Typography variant="h4">Stats</Typography>

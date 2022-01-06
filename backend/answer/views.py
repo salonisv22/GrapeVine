@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from authentication.mixins import ViewsetActionPermissionMixin
 from authentication.permissions import IsOwnerOrAdmin
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import *
 from .serializers import *
 from django.db.models import Q
@@ -42,19 +42,28 @@ class AnswerCommentView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
 class AnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-    permission_classes = [IsOwnerOrAdmin]
     action_based_permission_classes = {
-      
-        'retrieve': [AllowAny],
+        
+        'create': [IsAuthenticated],
+        'update': [IsOwnerOrAdmin],
+        'delete': [IsOwnerOrAdmin]
         
     }
 
-    def myAnswers(self, request, *args, **kwargs):
-        objs = Answer.objects.filter(Q(user = self.request.user.id))
-        queryset = self.filter_queryset(objs)
-        serializer = self.get_serializer(queryset, many = True)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED, headers=headers)
+    def user_answers(self, request, *args, **kwargs):
+        if request.data.get('user',False):
+            try: 
+                uuid.UUID(request.data.get('user'))
+            except ValueError:
+                return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
+            if Users.objects.filter(pk=request.data.get('user')).exists():
+                objs = Answer.objects.filter(Q(user = request.data.get('user')))
+                queryset = self.filter_queryset(objs)
+                serializer = self.get_serializer(queryset, many = True)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=status.HTTP_202_ACCEPTED, headers=headers)
+            return Response(data={'error':'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'error':'User field is compulsory'}, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request, *args, **kwargs ):
         answer = AnswerSerializer(data=request.data,context={'request': request})
