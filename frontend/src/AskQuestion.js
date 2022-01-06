@@ -1,12 +1,11 @@
 import { Box, Container, TextField, Stack, Button } from "@mui/material";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { typography } from "@mui/system";
 import { useAskQuestionMutation } from "./services/QuestionsService";
 import { useDispatch } from "react-redux";
 import { addAlertMessage } from "./redux/alertMessage";
 
 export default function AskQuestion() {
-
   const [askQuestion, askQuestionData] = useAskQuestionMutation();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -16,15 +15,15 @@ export default function AskQuestion() {
   const [isBodyValid, setIsBodyValid] = useState(true);
   const [isTagsValid, setIsTagsValid] = useState(true);
 
-    const [titleHelperText, setTitleHelperText] = useState();
-    const [bodyHelperText, setBodyHelperText] = useState();
-    const [tagsHelperText, setTagsHelperText] = useState();
+  const [titleHelperText, setTitleHelperText] = useState();
+  const [bodyHelperText, setBodyHelperText] = useState();
+  const [tagsHelperText, setTagsHelperText] = useState();
 
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (askQuestionData.isError) {
-      const { query,query_title,tags} = askQuestionData.error.data;
+      const { query, query_title, tags } = askQuestionData.error.data;
       const message = query || query_title || tags;
       if (askQuestionData.error.data)
         dispatch(
@@ -41,7 +40,7 @@ export default function AskQuestion() {
         })
       );
     }
-  }, [askQuestionData,dispatch])
+  }, [askQuestionData, dispatch]);
   return (
     <Container>
       <h2>Ask a public question</h2>
@@ -68,9 +67,7 @@ export default function AskQuestion() {
               onChange={(e) => {
                 setTitle(e.target.value);
                 if (!isTitleValid) {
-                  const validTitle = String(e.target.value).match(
-                    /^.{5,50}$/
-                  );
+                  const validTitle = String(e.target.value).match(/^.{5,50}$/);
                   setIsTitleValid(validTitle);
                   setTitleHelperText(
                     "Title should contain only atleast 5 and atmost 50 characters"
@@ -106,7 +103,7 @@ export default function AskQuestion() {
               onChange={(e) => {
                 setDescription(e.target.value);
                 if (!isBodyValid) {
-                  const validBody = String(e.target.value).match(/^.{20,500}$/);
+                  const validBody = String(e.target.value).length>20;
                   setIsBodyValid(validBody);
                   setBodyHelperText(
                     "Body should contain only atleast 20 and atmost 500 characters"
@@ -117,12 +114,11 @@ export default function AskQuestion() {
               error={!isBodyValid}
               helperText={isBodyValid ? undefined : bodyHelperText}
               onBlur={() => {
-                const validBody = String(description).match(/^.{20,500}$/);
+                const validBody = String(description).length>20;
                 setIsBodyValid(validBody);
                 setBodyHelperText(
                   "Body should contain only atleast 20 and atmost 500 characters"
                 );
-                
               }}
             />
           </Stack>
@@ -137,8 +133,8 @@ export default function AskQuestion() {
               placeholder="eg.(java,c++,dp,algo)"
               id="fullWidth"
               size="small"
-              value={tags}
               onChange={(e) => setTags(e.target.value)}
+              value={tags}
               error={!isTagsValid}
               helperText={isTagsValid ? undefined : tagsHelperText}
             />
