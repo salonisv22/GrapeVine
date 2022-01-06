@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "../utilities/config.json";
+import { baseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const users = createApi({
   reducerPath: "users",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.BASE_URL,
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     createUser: builder.mutation({
       query: (newUser) => ({
