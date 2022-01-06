@@ -2,17 +2,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "../utilities/config.json";
 import { login } from "./authenticationApi";
 import { addAlertMessage } from "../redux/alertMessage";
-// import { tokenReceived, loggedOut } from './authSlice'
 
-// const baseQuery = fetchBaseQuery({
-//   baseUrl: config.BASE_URL,
-//   prepareHeaders: (headers, { getState }) => {
-//     headers.set("Content-Type", "application/json; charset=UTF-8");
-//     headers.set("authorization", `Bearer ${localStorage.getItem("grapevine")}`);
-
-//     return headers;
-//   },
-// });
 const baseQuery = fetchBaseQuery({ baseUrl: config.BASE_URL });
 export const baseQueryWithReauth = async (args, api, extraOptions = {}) => {
   let result = await baseQuery(args, api, extraOptions);

@@ -1,14 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import config from "../utilities/config.json";
-
-
-
+import { baseQueryWithReauth } from "./baseQueryWithReauth";
 
 export const Questions = createApi({
   reducerPath: "Questions",
-  baseQuery: fetchBaseQuery({
-    baseUrl: config.BASE_URL,
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     questionList: builder.query({
       query: () => ({
@@ -25,7 +21,7 @@ export const Questions = createApi({
         method: "POST",
         body: newQues,
         headers: {
-          "Content-Type": "application/json",
+          ...config.POST_HEADER,
           Authorization: `Bearer ${localStorage.getItem("grapevine")}`,
         },
       }),
@@ -43,4 +39,8 @@ export const Questions = createApi({
   }),
 });
 
-export const { useAskQuestionMutation,useQuestionListQuery,useGetQuestionByIdQuery } = Questions;
+export const {
+  useAskQuestionMutation,
+  useQuestionListQuery,
+  useGetQuestionByIdQuery,
+} = Questions;
