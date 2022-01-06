@@ -1,6 +1,6 @@
 ## aaloo
 
-1. Complete djnago template
+1. Username or password is incorrect
 
 ## chipkali
 
@@ -8,4 +8,4 @@
 
 ## ankit
 
-1. chat with her
+1. Errors on register page
