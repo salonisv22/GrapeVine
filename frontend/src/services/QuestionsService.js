@@ -17,7 +17,7 @@ export const Questions = createApi({
     }),
     askQuestion: builder.mutation({
       query: (newQues) => ({
-        url: "my-questions/",
+        url: "question/",
         method: "POST",
         body: newQues,
         headers: {
