@@ -42,6 +42,7 @@ const App = () => {
           <Route path="/question/:id" element={<Questions />} />
           <Route path="/question/ask" element={<AskQuestion />} />
           <Route path="/question" element={<AllQuestions />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

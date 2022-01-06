@@ -9,7 +9,7 @@ class Answer(models.Model):
     answered_at = models.DateTimeField(auto_now_add = True)
     user = models.ForeignKey(Users, on_delete = models.CASCADE, related_name="answered_by")
     solution = models.TextField()
-    question = models.ForeignKey(Question, on_delete= models.CASCADE, related_name="associated_q")
+    question = models.ForeignKey(Question, on_delete= models.CASCADE, related_name="answers")
 
 class AnswerComment(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)

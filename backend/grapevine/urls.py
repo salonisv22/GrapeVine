@@ -42,8 +42,8 @@ urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
 	path('me/', UserView.as_view({'get' : 'me'}), name='me'),
-    path('my-questions/', QuestionView.as_view({'get' : 'myQuestions'}), name='my_questions'),
-    path('my-answers/', AnswerView.as_view({'get' : 'myAnswerss'}), name='my_answers'),
+    path('user-questions/', QuestionView.as_view({'get' : 'user_questions'}), name='user_questions'),
+    path('user-answers/', AnswerView.as_view({'get' : 'user_answers'}), name='user_answers'),
     path('', include('authentication.urls')),
     path('',include('vote.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -24,4 +24,4 @@ class AnswerSerializer(serializers.ModelSerializer):
         return data
 
 class AnswerWithCommentSerializer(AnswerSerializer, serializers.ModelSerializer):
-    comments = AnswerCommentSerializer(many=True, read_only=True)
+    comments_on_answer = AnswerCommentSerializer(many=True, read_only=True)
