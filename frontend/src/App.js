@@ -15,7 +15,7 @@ import Register from "./authentication/register";
 import AskQuestion from "./AskQuestion";
 import MainLayout from "./Layout/MainLayout";
 import Questions from "./questions/questionByID";
-import AllQuestions from "./questions/questionList";
+import AllQuestions from "./questions/AllQuestions";
 import { hideAlertMessage } from "./redux/alertMessage";
 
 const Alert = React.forwardRef(function Alert(props, ref) {

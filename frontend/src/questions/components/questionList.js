@@ -1,6 +1,4 @@
-import { useQuestionListQuery } from "../services/QuestionsService";
-import { questions } from "./ques";
-import { Link as RouterLink,useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Container,
   Divider,
@@ -9,17 +7,12 @@ import {
   Radio,
   ButtonGroup,
 } from "@material-ui/core";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { Stack } from "@mui/material";
+import { Stack, List, ListItem, ListItemText } from "@mui/material";
 import AddIcon from "@material-ui/icons/Add";
-import TagList from "./components/tagList";
+import TagList from "./tagList";
 
-const AllQuestions = () => {
-  const { data, error, isLoading } = useQuestionListQuery();
+const QuestionList = ({ questions }) => {
   const navigate = useNavigate();
-  console.log(data);
   return (
     <>
       <Container>
@@ -58,7 +51,7 @@ const AllQuestions = () => {
         </Stack>
         <br />
         <Divider />
-        {data?.map((question) => {
+        {questions?.map((question) => {
           const { id, tags, query_title, query, upvotes, downvotes } = question;
           return (
             <>
@@ -83,7 +76,11 @@ const AllQuestions = () => {
                     </ListItem>
                   </List>
                   <div className="Question">
-                    <h3 onClick={() => { navigate(`${id}`) }}>
+                    <h3
+                      onClick={() => {
+                        navigate(`${id}`);
+                      }}
+                    >
                       {query_title}
                     </h3>
                     <typography className="RestrictText">{query}</typography>
@@ -102,4 +99,4 @@ const AllQuestions = () => {
   );
 };
 
-export default AllQuestions;
+export default QuestionList;
