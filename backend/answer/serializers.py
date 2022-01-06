@@ -3,11 +3,13 @@ from .models import *
 from vote.serializers import DownvoteAnswerSerializer
 from vote.serializers import UpvoteAnswerSerializer
 class AnswerCommentSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username')
     class Meta:
         model = AnswerComment
         fields = "__all__"
         read_only_fields = ['user', 'commented_at']
 class AnswerSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username')
     answer_downvoted = DownvoteAnswerSerializer(many=True, read_only=True)
     answer_upvoted = UpvoteAnswerSerializer(many=True, read_only=True )
     class Meta:
