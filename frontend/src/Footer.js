@@ -36,7 +36,7 @@ export default function StickyFooter() {
           mt: "auto",
           position: "sticky",
           marginTop:3,
-          bottom: 0,
+          marginBottom: 0,
           width:"100%",
           backgroundColor: "#3f51b5",
         }}

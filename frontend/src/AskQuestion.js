@@ -8,8 +8,8 @@ import { addAlertMessage } from "./redux/alertMessage";
 export default function AskQuestion() {
 
   const [askQuestion, askQuestionData] = useAskQuestionMutation();
-  const [query, setQuery] = useState();
-  const [query_title, setQuery_title] = useState();
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
   const [tags, setTags] = useState();
 
   const [isTitleValid, setIsTitleValid] = useState(true);
@@ -17,7 +17,7 @@ export default function AskQuestion() {
   const [isTagsValid, setIsTagsValid] = useState(true);
 
     const [titleHelperText, setTitleHelperText] = useState();
-    const [bodynameHelperText, setBodynameHelperText] = useState();
+    const [bodyHelperText, setBodyHelperText] = useState();
     const [tagsHelperText, setTagsHelperText] = useState();
 
    const dispatch = useDispatch();
@@ -60,24 +60,33 @@ export default function AskQuestion() {
               Be specific and imagine you’re asking a question to another person
             </Box>
             <TextField
+              required
               fullWidth
               placeholder="define your title"
               id="fullWidth"
               size="small"
-              value={query_title}
               onChange={(e) => {
-                setQuery_title(e.target.value);
+                setTitle(e.target.value);
                 if (!isTitleValid) {
-                  const validTitle = String(e.target.value)
-                    .match(/^[a-zA-Z0-9_]{10,}[a-zA-Z0-9_]*$/);
+                  const validTitle = String(e.target.value).match(
+                    /^.{5,50}$/
+                  );
                   setIsTitleValid(validTitle);
                   setTitleHelperText(
-                    "Title should contain only alphanumerics or undescore and have atleast 10 characters"
+                    "Title should contain only atleast 5 and atmost 50 characters"
                   );
                 }
               }}
+              value={title}
               error={!isTitleValid}
               helperText={isTitleValid ? undefined : titleHelperText}
+              onBlur={() => {
+                const validTitle = String(title).match(/^.{5,50}$/);
+                setIsTitleValid(validTitle);
+                setTitleHelperText(
+                  "Title should contain only atleast 5 and atmost 50 characters"
+                );
+              }}
             />
           </Stack>
 
@@ -88,13 +97,33 @@ export default function AskQuestion() {
               question
             </Box>
             <TextField
+              required
               fullWidth
-              placeholder="define your title"
+              placeholder="Explain your Question here"
               id="fullWidth"
               multiline
               rows={6}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                if (!isBodyValid) {
+                  const validBody = String(e.target.value).match(/^.{20,500}$/);
+                  setIsBodyValid(validBody);
+                  setBodyHelperText(
+                    "Body should contain only atleast 20 and atmost 500 characters"
+                  );
+                }
+              }}
+              value={description}
+              error={!isBodyValid}
+              helperText={isBodyValid ? undefined : bodyHelperText}
+              onBlur={() => {
+                const validBody = String(description).match(/^.{20,500}$/);
+                setIsBodyValid(validBody);
+                setBodyHelperText(
+                  "Body should contain only atleast 20 and atmost 500 characters"
+                );
+                
+              }}
             />
           </Stack>
           <Stack>
@@ -103,12 +132,15 @@ export default function AskQuestion() {
               Add up to 5 tags to describe what your question is about
             </Box>
             <TextField
+              required
               fullWidth
               placeholder="eg.(java,c++,dp,algo)"
               id="fullWidth"
               size="small"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
+              error={!isTagsValid}
+              helperText={isTagsValid ? undefined : tagsHelperText}
             />
           </Stack>
           <Button
@@ -116,14 +148,30 @@ export default function AskQuestion() {
             onClick={() => {
               let message = undefined;
               let allRequiredSet = true;
-              if (query === undefined || query_title === "") {
+              if (title === undefined || title === "") {
                 setIsTitleValid(false);
                 setTitleHelperText("This field is required");
                 allRequiredSet = false;
               }
+              if (description === undefined || description === "") {
+                setIsBodyValid(false);
+                setBodyHelperText("This field is required");
+                allRequiredSet = false;
+              }
+
+              if (tags === undefined || tags === "") {
+                setIsTagsValid(false);
+                setTagsHelperText("This field is required");
+                allRequiredSet = false;
+              }
               if (!isTitleValid) {
                 message = "Title is not valid";
+              } else if (!isBodyValid) {
+                message = "Body is not Valid";
+              } else if (!isTagsValid) {
+                message = "Tag is not Valid";
               }
+
               if (message !== undefined) {
                 dispatch(
                   addAlertMessage({
@@ -133,8 +181,8 @@ export default function AskQuestion() {
                 );
               } else if (allRequiredSet) {
                 askQuestion({
-                  query_title: query,
-                  query: query,
+                  title: title,
+                  description: description,
                   tag_list: tags,
                 });
               }
