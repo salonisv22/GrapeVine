@@ -23,23 +23,7 @@ export default function StickyFooter() {
   return (
     <Box className="footerContainer">
       <CssBaseline />
-<<<<<<< HEAD:frontend/src/Footer.js
-      <Box
-        component="footer"
-        sx={{
-          py: 3,
-          px: 2,
-          mt: "auto",
-          position: "sticky",
-          marginTop:3,
-          marginBottom: 0,
-          width:"100%",
-          backgroundColor: "#3f51b5",
-        }}
-      >
-=======
       <Box component="footer" className="footer">
->>>>>>> b9b72e2 (add persist stoe):frontend/src/Layout/components/Footer.js
         <Container>
           {/* <Typography variant="body1" color="white">
             My sticky footer can be found here.
