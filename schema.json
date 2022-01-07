@@ -14,7 +14,8 @@
     "question_id": "uuid",
     "questioned_at": "time",
     "questioned_by": "user_id",
-    "question": "",
+    "title": "",
+    "description": "",
     "upvotes": "",
     "downvotes": ""
   },

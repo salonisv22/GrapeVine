@@ -9,7 +9,10 @@ const NotFound = () => {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: "100vh" }}
+      style={{
+        position: "absolute",
+        height: "100%",
+      }}
     >
       <Grid item>
         <Box display="inline-block">
