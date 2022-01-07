@@ -12,7 +12,6 @@ import { useGetQuestionByIdQuery } from "../services/QuestionsService";
 import TagList from "./components/tagList";
 
 const Questions = () => {
-
   const { data, error, isLoading } = useGetQuestionByIdQuery(
     "189a52a3-8d4f-4def-835f-5b4a353bc402"
   );

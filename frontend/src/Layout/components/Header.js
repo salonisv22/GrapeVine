@@ -4,12 +4,15 @@ import {
   Typography,
   InputBase,
   styled,
-    alpha,
-    Button
+  alpha,
+  Button,
+  IconButton,
 } from "@material-ui/core";
-import { Link as RouterLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
-import SearchIcon from "@material-ui/icons//Search";
+import { Search as SearchIcon, AccountCircle } from "@material-ui/icons/";
+// import { Icon } from "@mui/icons-material";
+
 import { Stack } from "@mui/material";
 
 const headersData = [
@@ -20,14 +23,6 @@ const headersData = [
   {
     label: "About",
     href: "/about",
-  },
-  {
-    label: "My Account",
-    href: "/account",
-  },
-  {
-    label: "Log In",
-    href: "/login",
   },
 ];
 
@@ -72,6 +67,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
+  const navigate = useNavigate();
   const displayDesktop = () => {
     return (
       <Toolbar>
@@ -96,21 +92,42 @@ export default function Header() {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
-        <Stack direction="row"  justifyContent="flex-end">
-          {headersData.map(({ label, href }) => {
-            return (
+        <Stack direction="row" alignItems={"center"} flexGrow={2}>
+          <Stack direction="row">
+            {headersData.map(({ label, href }) => {
+              return (
+                <Button
+                  {...{
+                    key: label,
+                    color: "inherit",
+                    to: href,
+                    component: Link,
+                  }}
+                >
+                  {label}
+                </Button>
+              );
+            })}
+          </Stack>
+          <Stack sx={{ ml: "auto" }}>
+            {localStorage.getItem("grapevine") ? (
+              <IconButton onClick={() => navigate("/profile")} color="inherit">
+                <AccountCircle />
+              </IconButton>
+            ) : (
               <Button
+                variant="outlined"
                 {...{
-                  key: label,
+                  key: "login",
                   color: "inherit",
-                  to: href,
-                  component: RouterLink,
+                  to: "/auth/login",
+                  component: Link,
                 }}
               >
-                {label}
+                login
               </Button>
-            );
-          })}
+            )}
+          </Stack>
         </Stack>
       </Toolbar>
     );
