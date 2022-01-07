@@ -1,6 +1,5 @@
-import { Box, Container, TextField, Stack, Button } from "@mui/material";
+import { Box, Container, TextField, Stack, Button,Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import { typography } from "@mui/system";
 import { useAskQuestionMutation } from "./services/QuestionsService";
 import { useDispatch } from "react-redux";
 import { addAlertMessage } from "./redux/alertMessage";
@@ -88,8 +87,8 @@ export default function AskQuestion() {
           </Stack>
 
           <Stack>
-            <typography>Body</typography>
-            <Box sx={{ typography: "body2", fontWeight: "light" }}>
+            <Typography>Body</Typography>
+            <Box sx={{ Typography: "body2", fontWeight: "light" }}>
               Include all the information someone would need to answer your
               question
             </Box>
