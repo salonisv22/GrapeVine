@@ -1,3 +1,4 @@
+from django.db.models.aggregates import Count
 from rest_framework import viewsets
 from authentication.mixins import ViewsetActionPermissionMixin
 from authentication.permissions import IsOwnerOrAdmin
@@ -8,6 +9,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
 import uuid
+from rest_framework import filters
 # Create your views here.
 class QuestionTagView(viewsets.ModelViewSet):
     query_set = QuestionTag.objects.all()
@@ -64,12 +66,37 @@ class QuestionCommentView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
 class QuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    search_fields = ['title', 'description', 'answers__solution', 'tags__tag']
+    ordering_fields = ['questioned_at', 'user__username', 'upvotes', 'answers', 'title']
     action_based_permission_classes = {
       
         'create': [IsAuthenticated],
         'update': [IsOwnerOrAdmin],
         'delete': [IsOwnerOrAdmin]
     }
+    def list(self, request, *args, **kwargs):
+        order_by = request.GET.get('ordering', False)
+        if order_by:
+            if order_by == "upvotes":
+                queryset = Question.objects.all().annotate(upvotes=Count('q_upvoted')).order_by('-upvotes')
+            elif order_by == "answers":
+                queryset = Question.objects.all().annotate(answers=Count('answers')).order_by('-answers')
+            elif order_by == "-upvotes":
+                queryset = Question.objects.all().annotate(upvotes=Count('q_upvoted')).order_by('upvotes')
+            elif order_by == "-answers":
+                queryset = Question.objects.all().annotate(answers=Count('answers')).order_by('answers')
+            else:
+                queryset = self.filter_queryset(self.get_queryset())
+        else:
+            queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
