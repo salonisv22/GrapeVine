@@ -21,13 +21,9 @@ function Copyright() {
 
 export default function StickyFooter() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <Box className="footerContainer">
       <CssBaseline />
+<<<<<<< HEAD:frontend/src/Footer.js
       <Box
         component="footer"
         sx={{
@@ -41,6 +37,9 @@ export default function StickyFooter() {
           backgroundColor: "#3f51b5",
         }}
       >
+=======
+      <Box component="footer" className="footer">
+>>>>>>> b9b72e2 (add persist stoe):frontend/src/Layout/components/Footer.js
         <Container>
           {/* <Typography variant="body1" color="white">
             My sticky footer can be found here.
