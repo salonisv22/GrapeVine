@@ -7,6 +7,8 @@ from .serializers import *
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import filters
+from django.db.models.aggregates import Count
 
 class AnswerCommentView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = AnswerComment.objects.all()
@@ -42,6 +44,9 @@ class AnswerCommentView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
 class AnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    search_fields = ['solution', ]
+    ordering_fields = ['answered_at', 'user__username', 'upvotes']
     action_based_permission_classes = {
         
         'create': [IsAuthenticated],
@@ -64,6 +69,25 @@ class AnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED, headers=headers)
             return Response(data={'error':'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(data={'error':'User field is compulsory'}, status=status.HTTP_400_BAD_REQUEST)
+
+    def list(self, request, *args, **kwargs):
+        order_by = request.GET.get('ordering', False)
+        if order_by:
+            if order_by == "upvotes":
+                queryset = Answer.objects.all().annotate(upvotes=Count('a_upvoted')).order_by('-upvotes')
+            elif order_by == "-upvotes":
+                queryset = Answer.objects.all().annotate(upvotes=Count('a_upvoted')).order_by('upvotes')
+            else:
+                queryset = self.filter_queryset(self.get_queryset())
+        else:
+            queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request, *args, **kwargs ):
         answer = AnswerSerializer(data=request.data,context={'request': request})

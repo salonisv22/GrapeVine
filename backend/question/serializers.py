@@ -8,7 +8,7 @@ from vote.serializers import DownvoteQuestionSerializer
 from vote.serializers import UpvoteQuestionSerializer
 
 class QuestionCommentSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
+    username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = QuestionComment
         fields = "__all__"
@@ -21,7 +21,7 @@ class QuestionTagSerializer(serializers.ModelSerializer):
 
      
 class QuestionSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
+    username = serializers.CharField(source='user.username', read_only=True)
     q_downvoted = DownvoteQuestionSerializer(many=True, read_only=True)
     q_upvoted = UpvoteQuestionSerializer(many=True, read_only=True )
     tags = QuestionTagSerializer(many=True, read_only=True)
