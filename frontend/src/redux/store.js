@@ -19,7 +19,7 @@ import { login, validateSelf } from "../services/authenticationApi";
 import { users } from "../services/usersApi";
 import alertMessage from "./alertMessage";
 import { Questions } from "../services/QuestionsService";
-import { Comments } from "../services/commentService"
+import { Comments } from "../services/commentService";
 import { Answers } from "../services/answerService";
 
 import { isRejectedWithValue } from "@reduxjs/toolkit";
@@ -46,7 +46,7 @@ const rootReducer = combineReducers({
   [users.reducerPath]: users.reducer,
   [Questions.reducerPath]: Questions.reducer,
   [Comments.reducerPath]: Comments.reducer,
-  [Answers.reducerPath]:Answers.reducer,
+  [Answers.reducerPath]: Answers.reducer,
   alertMessage: alertMessage,
 });
 
@@ -58,7 +58,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     })
-      .concat(rtkQueryErrorLogger)
       .concat(login.middleware)
       .concat(validateSelf.middleware)
       .concat(users.middleware),

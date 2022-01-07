@@ -6,7 +6,7 @@ export const Comments = createApi({
   reducerPath: "Comments",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    quesComment: builder.mutation({
+    questionComment: builder.mutation({
       query: (newComment) => ({
         url: "question-comment/",
         method: "POST",
@@ -32,4 +32,5 @@ export const Comments = createApi({
   }),
 });
 
-export const {useQuesCommentMutation,useAnswerCommentMutation } = Comments;
+export const { useQuestionCommentMutation, useAnswerCommentMutation } =
+  Comments;
