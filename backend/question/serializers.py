@@ -1,5 +1,3 @@
-from django.db import models
-from django.db.models import fields
 from rest_framework import serializers
 
 from answer.serializers import AnswerSerializer
@@ -43,7 +41,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         return data
 
 class QuestionWithCommentSerializer(QuestionSerializer, serializers.ModelSerializer):
-    comments_on_question = QuestionCommentSerializer(many=True, read_only=True)
+    comments = QuestionCommentSerializer(source='comments_on_question', many=True, read_only=True)
 
     def to_representation(self, instance):
         data = super(QuestionSerializer, self).to_representation(instance)

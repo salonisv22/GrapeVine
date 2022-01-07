@@ -39,22 +39,24 @@ class UpvoteQuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
         return Response(data={'error':'User field is compulsory'}, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request, *args, **kwargs):
-        try: 
-            uuid.UUID(request.data.get('question'))
-        except ValueError:
-            return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
-        if Question.objects.filter(pk=request.data.get('question')).exists():
-            DownvoteQuestion.objects.filter(Q(user = self.request.user.id, question = request.data.get('question'))).delete()
-            already_upvoted = UpvoteQuestion.objects.filter(Q(user = self.request.user.id, question = request.data.get('question')))
-            if not already_upvoted:
-                serializer = self.get_serializer(data=request.data)
-                serializer.is_valid(raise_exception=True)
-                serializer.save(user = request.user)
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-            already_upvoted.delete()
-            return Response(data={'sucess':'Upvote removed'}, status=status.HTTP_204_NO_CONTENT)
-        return Response(data={'error':'question id does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        if request.data.get('question',False):
+            try: 
+                uuid.UUID(request.data.get('question'))
+            except ValueError:
+                return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
+            if Question.objects.filter(pk=request.data.get('question')).exists():
+                DownvoteQuestion.objects.filter(Q(user = self.request.user.id, question = request.data.get('question'))).delete()
+                already_upvoted = UpvoteQuestion.objects.filter(Q(user = self.request.user.id, question = request.data.get('question')))
+                if not already_upvoted:
+                    serializer = self.get_serializer(data=request.data)
+                    serializer.is_valid(raise_exception=True)
+                    serializer.save(user = request.user)
+                    headers = self.get_success_headers(serializer.data)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+                already_upvoted.delete()
+                return Response(data={'sucess':'Upvote removed'}, status=status.HTTP_202_ACCEPTED)
+            return Response(data={'error':'question id does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'error':'question field is compulsory'}, status=status.HTTP_400_BAD_REQUEST)
 
 class UpvoteAnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = UpvoteAnswer.objects.all()
@@ -84,22 +86,24 @@ class UpvoteAnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
         return Response(data={'error':'User field is compulsory'}, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request, *args, **kwargs):
-        try: 
-            uuid.UUID(request.data.get('answer'))
-        except ValueError:
-            return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
-        if Answer.objects.filter(pk=request.data.get('answer')).exists():
-            DownvoteAnswer.objects.filter(Q(user = self.request.user.id, answer = request.data.get('answer'))).delete()
-            already_upvoted = UpvoteAnswer.objects.filter(Q(user = self.request.user.id, answer = request.data.get('answer')))
-            if not already_upvoted:
-                serializer = self.get_serializer(data=request.data)
-                serializer.is_valid(raise_exception=True)
-                serializer.save(user = request.user)
-                headers = self.get_success_headers(serializer.data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-            already_upvoted.delete()
-            return Response(data={'error':'You have already upvoted'})
-        return Response(data={'error':'answer id does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        if request.data.get('answer',False):
+            try: 
+                uuid.UUID(request.data.get('answer'))
+            except ValueError:
+                return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
+            if Answer.objects.filter(pk=request.data.get('answer')).exists():
+                DownvoteAnswer.objects.filter(Q(user = self.request.user.id, answer = request.data.get('answer'))).delete()
+                already_upvoted = UpvoteAnswer.objects.filter(Q(user = self.request.user.id, answer = request.data.get('answer')))
+                if not already_upvoted:
+                    serializer = self.get_serializer(data=request.data)
+                    serializer.is_valid(raise_exception=True)
+                    serializer.save(user = request.user)
+                    headers = self.get_success_headers(serializer.data)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+                already_upvoted.delete()
+                return Response(data={'sucess':'Upvote removed'})
+            return Response(data={'error':'answer id does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'error':'answer field is compulsory'}, status=status.HTTP_400_BAD_REQUEST)
 
 class DownvoteQuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     queryset = DownvoteQuestion.objects.all()

@@ -23,7 +23,6 @@ from rest_framework_simplejwt import views as jwt_views
 
 from question.views import QuestionCommentView
 
-from . import views
 from users.views import UserView
 from question.views import QuestionView
 from rest_framework import routers
@@ -46,5 +45,6 @@ urlpatterns += [
     path('user-answers/', AnswerView.as_view({'get' : 'user_answers'}), name='user_answers'),
     path('', include('authentication.urls')),
     path('',include('vote.urls')),
+    path('',include('notification.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
