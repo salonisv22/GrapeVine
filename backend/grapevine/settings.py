@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
+from pathlib import Path 
 import os
 import datetime
 
@@ -44,13 +44,15 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist', # App to access blackistTokens and outstandingTokens
+    'channels',
     
     # local
     'users',
     'authentication',
     'question',
     'answer',
-    'vote'
+    'vote',
+    'notification',
 ]
 
 MIDDLEWARE = [
@@ -83,6 +85,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'grapevine.wsgi.application'
+ASGI_APPLICATION = 'grapevine.asgi.application'
 
 
 # Database

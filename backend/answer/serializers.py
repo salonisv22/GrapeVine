@@ -9,7 +9,7 @@ class AnswerCommentSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ['user', 'commented_at']
 class AnswerSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username', read_only=True)
+    username = serializers.CharField(source='user.username')
     a_downvoted = DownvoteAnswerSerializer(many=True, read_only=True)
     a_upvoted = UpvoteAnswerSerializer(many=True, read_only=True )
     class Meta:
@@ -26,4 +26,4 @@ class AnswerSerializer(serializers.ModelSerializer):
         return data
 
 class AnswerWithCommentSerializer(AnswerSerializer, serializers.ModelSerializer):
-    comments_on_answer = AnswerCommentSerializer(many=True, read_only=True)
+    comments = AnswerCommentSerializer(source='comments_on_answer', many=True, read_only=True)

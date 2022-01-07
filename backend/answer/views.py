@@ -96,6 +96,10 @@ class AnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(answer.errors)
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = AnswerWithCommentSerializer(instance)
+        return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
