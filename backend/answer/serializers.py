@@ -3,15 +3,15 @@ from .models import *
 from vote.serializers import DownvoteAnswerSerializer
 from vote.serializers import UpvoteAnswerSerializer
 class AnswerCommentSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
+    username = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = AnswerComment
         fields = "__all__"
         read_only_fields = ['user', 'commented_at']
 class AnswerSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
-    answer_downvoted = DownvoteAnswerSerializer(many=True, read_only=True)
-    answer_upvoted = UpvoteAnswerSerializer(many=True, read_only=True )
+    username = serializers.CharField(source='user.username', read_only=True)
+    a_downvoted = DownvoteAnswerSerializer(many=True, read_only=True)
+    a_upvoted = UpvoteAnswerSerializer(many=True, read_only=True )
     class Meta:
         model = Answer
         fields = "__all__"
@@ -19,10 +19,10 @@ class AnswerSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super(AnswerSerializer, self).to_representation(instance)
-        data['upvotes'] = len(data['answer_upvoted'])
-        data['downvotes'] = len(data['answer_downvoted'])
-        data.pop('answer_downvoted')
-        data.pop('answer_upvoted')
+        data['upvotes'] = len(data['a_upvoted'])
+        data['downvotes'] = len(data['a_downvoted'])
+        data.pop('a_downvoted')
+        data.pop('a_upvoted')
         return data
 
 class AnswerWithCommentSerializer(AnswerSerializer, serializers.ModelSerializer):

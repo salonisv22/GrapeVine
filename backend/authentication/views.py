@@ -9,8 +9,8 @@ from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenOb
 
 # Create your views here.
 class BlacklistTokenView(GenericAPIView):
-    # permission_classes = [permissions.AllowAny,]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny,]
+    # permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         try:
