@@ -24,13 +24,13 @@ class UpvoteQuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     http_method_names = ['post', 'get']
 
     def list(self, request, *args, **kwargs):
-        if request.data.get('user',False):
+        if request.GET.get('user',False):
             try: 
-                uuid.UUID(request.data.get('user'))
+                uuid.UUID(request.GET.get('user'))
             except ValueError:
                 return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
-            if Users.objects.filter(pk=request.data.get('user')).exists():
-                objs = UpvoteQuestion.objects.filter(Q(user = request.data.get('user')))
+            if Users.objects.filter(pk=request.GET.get('user')).exists():
+                objs = UpvoteQuestion.objects.filter(Q(user = request.GET.get('user')))
                 queryset = self.filter_queryset(objs)
                 serializer = self.get_serializer(queryset, many = True)
                 headers = self.get_success_headers(serializer.data)
@@ -71,13 +71,13 @@ class UpvoteAnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     http_method_names = ['post', 'get']
 
     def list(self, request, *args, **kwargs):
-        if request.data.get('user',False):
+        if request.GET.get('user',False):
             try: 
-                uuid.UUID(request.data.get('user'))
+                uuid.UUID(request.GET.get('user'))
             except ValueError:
                 return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
-            if Users.objects.filter(pk=request.data.get('user')).exists():
-                objs = UpvoteAnswer.objects.filter(Q(user = request.data.get('user')))
+            if Users.objects.filter(pk=request.GET.get('user')).exists():
+                objs = UpvoteAnswer.objects.filter(Q(user = request.GET.get('user')))
                 queryset = self.filter_queryset(objs)
                 serializer = self.get_serializer(queryset, many = True)
                 headers = self.get_success_headers(serializer.data)
@@ -118,13 +118,13 @@ class DownvoteQuestionView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     http_method_names = ['post', 'get']
 
     def list(self, request, *args, **kwargs):
-        if request.data.get('user',False):
+        if request.GET.get('user',False):
             try: 
-                uuid.UUID(request.data.get('user'))
+                uuid.UUID(request.GET.get('user'))
             except ValueError:
                 return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
-            if Users.objects.filter(pk=request.data.get('user')).exists():
-                objs = DownvoteQuestion.objects.filter(Q(user = request.data.get('user')))
+            if Users.objects.filter(pk=request.GET.get('user')).exists():
+                objs = DownvoteQuestion.objects.filter(Q(user = request.GET.get('user')))
                 queryset = self.filter_queryset(objs)
                 serializer = self.get_serializer(queryset, many = True)
                 headers = self.get_success_headers(serializer.data)
@@ -166,13 +166,13 @@ class DownvoteAnswerView(ViewsetActionPermissionMixin, viewsets.ModelViewSet):
     http_method_names = ['post','get']
 
     def list(self, request, *args, **kwargs):
-        if request.data.get('user',False):
+        if request.GET.get('user',False):
             try: 
-                uuid.UUID(request.data.get('user'))
+                uuid.UUID(request.GET.get('user'))
             except ValueError:
                 return Response(data={'error':'Invalid UUID'}, status=status.HTTP_400_BAD_REQUEST)
-            if Users.objects.filter(pk=request.data.get('user')).exists():
-                objs = DownvoteAnswer.objects.filter(Q(user = request.data.get('user')))
+            if Users.objects.filter(pk=request.GET.get('user')).exists():
+                objs = DownvoteAnswer.objects.filter(Q(user = request.GET.get('user')))
                 queryset = self.filter_queryset(objs)
                 serializer = self.get_serializer(queryset, many = True)
                 headers = self.get_success_headers(serializer.data)
