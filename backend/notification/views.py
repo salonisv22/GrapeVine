@@ -111,9 +111,9 @@ class NotificationView(viewsets.ModelViewSet):
                     data={
                         'sender':instance.user.id, 
                         'action':'answered', 
-                        'user':instance.answer.user.id, 
+                        'user':instance.user.id, 
                         'post':'answer', 
-                        'post_id':instance.answer.id, 
+                        'post_id':instance.id, 
                         'description':"You have been answered" 
                     }
                 )

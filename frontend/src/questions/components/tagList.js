@@ -9,7 +9,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: "#6C63FF",
 }));
 const TagList = ({ tags }) => {
-  return (
+  return tags ? (
     <Stack direction="row" spacing={0.5}>
       {tags.map((tag) => {
         return (
@@ -21,6 +21,8 @@ const TagList = ({ tags }) => {
         );
       })}
     </Stack>
+  ) : (
+    <></>
   );
 };
 

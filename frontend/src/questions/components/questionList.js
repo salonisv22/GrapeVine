@@ -7,7 +7,7 @@ import {
   Radio,
   ButtonGroup,
 } from "@material-ui/core";
-import { Stack, List, ListItem, ListItemText } from "@mui/material";
+import { Stack, List, ListItem, ListItemText ,Typography} from "@mui/material";
 import AddIcon from "@material-ui/icons/Add";
 import TagList from "./tagList";
 
@@ -52,7 +52,15 @@ const QuestionList = ({ questions }) => {
         <br />
         <Divider />
         {questions?.map((question) => {
-          const { id, tags, query_title, query, upvotes, downvotes } = question;
+          const {
+            id,
+            tags,
+            title,
+            description,
+            upvotes,
+            downvotes,
+            no_of_answers,
+          } = question;
           return (
             <>
               <Container className="QuestionList">
@@ -70,22 +78,27 @@ const QuestionList = ({ questions }) => {
                       <ListItemText
                         className="QuestionInsightText"
                         edge="end"
-                        primary={upvotes + downvotes}
+                        primary={no_of_answers}
                         secondary="Answers"
                       />
                     </ListItem>
                   </List>
                   <div className="Question">
-                    <h3
-                      onClick={() => {
-                        navigate(`${id}`);
-                      }}
-                    >
-                      {query_title}
-                    </h3>
-                    <typography className="RestrictText">{query}</typography>
-                    <Stack direction="row" spacing={0.5}>
-                      <TagList tags={tags} />
+                    <Stack spacing={1}>
+                      <Typography
+                        variant="h6"
+                        onClick={() => {
+                          navigate(`${id}`);
+                        }}
+                      >
+                        {title}
+                      </Typography>
+                      <Typography className="RestrictText">
+                        {description}
+                      </Typography>
+                      <Stack direction="row" spacing={0.5}>
+                        <TagList tags={tags} />
+                      </Stack>
                     </Stack>
                   </div>
                 </Stack>
