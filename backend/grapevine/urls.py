@@ -40,7 +40,7 @@ router.register(r'answer-comment', AnswerCommentView)
 urlpatterns = router.urls
 urlpatterns += [
     path('admin/', admin.site.urls),
-	path('me/', UserView.as_view({'get' : 'me'}), name='me'),
+	path('user/', UserView.as_view({'patch' : 'update'}), name='update_user'),
     path('user-questions/', QuestionView.as_view({'get' : 'user_questions'}), name='user_questions'),
     path('user-answers/', AnswerView.as_view({'get' : 'user_answers'}), name='user_answers'),
     path('', include('authentication.urls')),

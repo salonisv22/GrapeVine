@@ -57,7 +57,3 @@ class UserView(viewsets.ModelViewSet):
                 return Response(data={'error': "Password doesn't match"},status=status.HTTP_400_BAD_REQUEST) 
             return Response(data={'error': "currnet_password can't be empty"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_403_FORBIDDEN)
-
-  
-
-    
