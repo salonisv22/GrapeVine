@@ -24,14 +24,6 @@ const headersData = [
     label: "About",
     href: "/about",
   },
-  {
-    label: "My Account",
-    href: "/profile",
-  },
-  {
-    label: "Log In",
-    href: "/auth/login",
-  },
 ];
 
 const Search = styled("div")(({ theme }) => ({
