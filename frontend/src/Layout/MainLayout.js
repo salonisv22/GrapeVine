@@ -2,10 +2,10 @@ import { Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-import { useValidateSelfQuery } from "../services/authenticationApi";
+import { useSelfQuery } from "../services/authenticationApi";
 
 const MainLayout = () => {
-  useValidateSelfQuery();
+  useSelfQuery();
 
   return (
     <div className="rootContainer">

@@ -36,6 +36,17 @@ export const Questions = createApi({
         },
       }),
     }),
+
+    userQuestion: builder.query({
+      query: (id) => ({
+        url: `user-question/`,
+        body:id,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("grapevine")}`,
+        },
+      }),
+    }),
   }),
 });
 
@@ -43,4 +54,5 @@ export const {
   useAskQuestionMutation,
   useQuestionListQuery,
   useGetQuestionByIdQuery,
+  useUserQuestionQuery
 } = Questions;
