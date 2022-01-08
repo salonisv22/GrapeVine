@@ -72,7 +72,12 @@ const Answers = ({ questionID, answerCount, answers }) => {
       ) : (
         <></>
       )}
-      <Stack spacing={1}>
+      <Stack
+        sx={{
+          my: "3rem",
+        }}
+        spacing={1}
+      >
         <Typography variant="h5">Your Answer</Typography>
         <TextField
           required
@@ -124,7 +129,7 @@ const Answers = ({ questionID, answerCount, answers }) => {
               );
             } else {
               postAnswer({
-                solution: answer,
+                answer: answer,
                 question: questionID,
               });
             }

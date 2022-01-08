@@ -9,7 +9,6 @@ const Comments = ({ id, comments, onCommentSubmit }) => {
   return (
     <>
       <Stack spacing={0.5}>
-        <Divider />
         {comments ? (
           comments.map((item) => {
             return (

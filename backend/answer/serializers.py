@@ -9,13 +9,13 @@ class AnswerCommentSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ['user', 'commented_at']
 class AnswerSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(source='user.username')
+    username = serializers.CharField(source='user.username', read_only = True)
     a_downvoted = DownvoteAnswerSerializer(many=True, read_only=True)
     a_upvoted = UpvoteAnswerSerializer(many=True, read_only=True )
     class Meta:
         model = Answer
         fields = "__all__"
-        read_only_fields = ['user']
+        read_only_fields = ['user',]
 
     def to_representation(self, instance):
         data = super(AnswerSerializer, self).to_representation(instance)
