@@ -6,6 +6,7 @@ import {
   Stack,
   TextField,
   ButtonGroup,
+  Divider,
 } from "@mui/material";
 import { addAlertMessage } from "../../redux/alertMessage";
 import { useDispatch } from "react-redux";
@@ -53,96 +54,96 @@ const Answers = ({ questionID, answerCount, answers }) => {
           </Button>
         </ButtonGroup>
       </Stack>
-      {answers ? (
-        answers.map((answer) => (
-          <div id={answer.id}>
-            <Description
-              id={answer.id}
-              type="answer"
-              username={answer.username}
-              upvotes={answer.upvotes}
-              downvotes={answer.downvotes}
-              description={answer.answer}
-              comments={answer.comments}
-              answered_at={answer.answered_at}
-              onCommentSubmit={(id, comment) => {
-                answerComment({
-                  answer: id,
-                  comment: comment,
-                });
-              }}
-            />
-          </div>
-        ))
-      ) : (
-        <></>
-      )}
-      <Stack
-        sx={{
-          my: "3rem",
-        }}
-        spacing={1}
-      >
-        <Typography variant="h5">Your Answer</Typography>
-        <TextField
-          required
-          fullWidth
-          placeholder="Explain your Answer here"
-          id="fullWidth"
-          multiline
-          rows={7}
-          onChange={(e) => {
-            setAnswer(e.target.value);
-            if (!isAnswerValid) {
-              const validBody = String(e.target.value).length > 20;
-              setIsAnswerValid(validBody);
-              setAnswerHelperText(
-                "Body should contain only atleast 20 and atmost 500 characters"
-              );
-            }
+      <div style={{ padding: "0 2rem" }}>
+        {answers &&
+          answers.map((answer) => (
+            <div id={answer.id}>
+              <Description
+                id={answer.id}
+                type="answer"
+                username={answer.username}
+                upvotes={answer.upvotes}
+                downvotes={answer.downvotes}
+                description={answer.answer}
+                comments={answer.comments}
+                answered_at={answer.answered_at}
+                onCommentSubmit={(id, comment) => {
+                  answerComment({
+                    answer: id,
+                    comment: comment,
+                  });
+                }}
+              />
+              <Divider sx={{ my: "1.5rem" }} />
+            </div>
+          ))}
+        <Stack
+          sx={{
+            my: "3rem",
           }}
-          value={answer}
-          error={!isAnswerValid}
-          helperText={isAnswerValid ? undefined : answerHelperText}
-          onBlur={() => {
-            const validBody = String(answer).length > 10;
-            setIsAnswerValid(validBody);
-            setAnswerHelperText("Answer should contain only atleast 10 ");
-          }}
-        />
-
-        <Button
-          variant="contained"
-          style={{ maxWidth: "200px" }}
-          onClick={() => {
-            let message = undefined;
-            if (answer === undefined || answer === "") {
-              setIsAnswerValid(false);
-              setAnswerHelperText("This field is required");
-            }
-
-            if (!isAnswerValid) {
-              message = "Answer is not valid";
-            }
-
-            if (message !== undefined) {
-              dispatch(
-                addAlertMessage({
-                  severity: "error",
-                  message: message,
-                })
-              );
-            } else {
-              postAnswer({
-                answer: answer,
-                question: questionID,
-              });
-            }
-          }}
+          spacing={1}
         >
-          Post your Answer
-        </Button>
-      </Stack>
+          <Typography variant="h5">Your Answer</Typography>
+          <TextField
+            required
+            fullWidth
+            placeholder="Explain your Answer here"
+            id="fullWidth"
+            multiline
+            rows={7}
+            onChange={(e) => {
+              setAnswer(e.target.value);
+              if (!isAnswerValid) {
+                const validBody = String(e.target.value).length > 20;
+                setIsAnswerValid(validBody);
+                setAnswerHelperText(
+                  "Body should contain only atleast 20 and atmost 500 characters"
+                );
+              }
+            }}
+            value={answer}
+            error={!isAnswerValid}
+            helperText={isAnswerValid ? undefined : answerHelperText}
+            onBlur={() => {
+              const validBody = String(answer).length > 10;
+              setIsAnswerValid(validBody);
+              setAnswerHelperText("Answer should contain only atleast 10 ");
+            }}
+          />
+
+          <Button
+            variant="contained"
+            style={{ maxWidth: "200px" }}
+            onClick={() => {
+              let message = undefined;
+              if (answer === undefined || answer === "") {
+                setIsAnswerValid(false);
+                setAnswerHelperText("This field is required");
+              }
+
+              if (!isAnswerValid) {
+                message = "Answer is not valid";
+              }
+
+              if (message !== undefined) {
+                dispatch(
+                  addAlertMessage({
+                    severity: "error",
+                    message: message,
+                  })
+                );
+              } else {
+                postAnswer({
+                  answer: answer,
+                  question: questionID,
+                });
+              }
+            }}
+          >
+            Post your Answer
+          </Button>
+        </Stack>
+      </div>
     </div>
   );
 };

@@ -73,59 +73,75 @@ const Description = ({
         paddingTop={1}
         spacing={1}
       >
-        <Typography variant="body1">{description}</Typography>
-        <TagList tags={tags} />
+        <Stack
+          style={{
+            width: "100%",
+          }}
+          direction="row"
+        >
+          <div style={{ maxWidth: "80%" }}>
+            <Typography sx={{ mr: "4rem" }} variant="body1">
+              {description}
+            </Typography>
+            <TagList tags={tags} />
+          </div>
 
-        {/* USER CARD */}
-        {username && type === "answer" && (
-          <Card className="userCard">
-            <CardContentNoPadding>
-              <Typography
-                sx={{ fontSize: 11 }}
-                color="text.primary"
-                gutterBottom
-              >
-                {type === "question" ? (
-                  "Asked by"
-                ) : (
-                  <div>Answered at &nbsp;{Time({ date: answered_at })}</div>
-                )}
-              </Typography>
-              <Typography variant="h7" component="div">
-                <Stack
-                  direction="row"
-                  style={{ width: "100%", justifyContent: "space-between" }}
-                >
-                  <Link href="#" underline="none">
-                    {username}
-                  </Link>
-                  <Share
-                    fontSize="small"
-                    style={{
-                      cursor: "pointer",
-                      marginLeft: "auto",
-                      marginRight: "4px",
-                    }}
-                    onClick={() => {
-                      dispatch(
-                        addAlertMessage({
-                          severity: "success",
-                          message: "Link copied to clipboard",
-                        })
-                      );
-                      navigator.clipboard.writeText(
-                        window.location.origin +
-                          window.location.pathname +
-                          "#" +
-                          id
-                      );
-                    }}
-                  />
-                </Stack>
-              </Typography>
-            </CardContentNoPadding>
-          </Card>
-        )}
+          <div style={{ marginLeft: "auto" }}>
+            {/* USER CARD */}
+            {username && type === "answer" && (
+              <Card className="userCard">
+                <CardContentNoPadding>
+                  <Typography
+                    sx={{ fontSize: 11 }}
+                    color="text.primary"
+                    gutterBottom
+                  >
+                    {type === "question" ? (
+                      "Asked by"
+                    ) : (
+                      <div>
+                        Answered at <Time date={answered_at} />
+                      </div>
+                    )}
+                  </Typography>
+                  <Typography variant="h7" component="div">
+                    <Stack
+                      direction="row"
+                      style={{ width: "100%", justifyContent: "space-between" }}
+                    >
+                      <Link href="#" underline="none">
+                        {username}
+                      </Link>
+                      <Share
+                        fontSize="small"
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "auto",
+                          marginRight: "4px",
+                        }}
+                        onClick={() => {
+                          dispatch(
+                            addAlertMessage({
+                              severity: "success",
+                              message: "Link copied to clipboard",
+                            })
+                          );
+                          navigator.clipboard.writeText(
+                            window.location.origin +
+                              window.location.pathname +
+                              "#" +
+                              id
+                          );
+                        }}
+                      />
+                    </Stack>
+                  </Typography>
+                </CardContentNoPadding>
+              </Card>
+            )}
+          </div>
+        </Stack>
+
         <Comments
           id={id}
           onCommentSubmit={onCommentSubmit}

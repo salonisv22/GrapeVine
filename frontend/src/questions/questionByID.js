@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Container, Divider } from "@material-ui/core";
+import { Container, Divider, Typography } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { useGetQuestionByIdQuery } from "../services/QuestionsService";
@@ -44,7 +44,7 @@ const Questions = () => {
       <div className="question_section">
         <Container fixed>
           <h1>{data.title}</h1>
-          <plaintext sx={{ color: "text.secondary", fontFamily: "Roboto" }}>
+          <Typography sx={{ color: "text.secondary", fontFamily: "Roboto" }}>
             <Stack style={{ width: "100%" }} direction="row" spacing={2}>
               <div>
                 Asked at:
@@ -77,7 +77,7 @@ const Questions = () => {
                 }}
               />
             </Stack>
-          </plaintext>
+          </Typography>
           <Divider />
 
           <Description
@@ -96,6 +96,8 @@ const Questions = () => {
               });
             }}
           />
+          <Divider style={{ margin: "1.5rem 0" }} />
+          {/* <Divider sx={{ my: "15rem" }} /> */}
           <Answers
             questionID={data.id}
             answerCount={data.no_of_answers}
