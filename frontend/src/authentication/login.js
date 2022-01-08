@@ -22,11 +22,13 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(loginData);
     if (loginData.isError) {
       dispatch(
         addAlertMessage({
           severity: "error",
-          message: loginData.error.data.detail,
+          message:
+            loginData.error.data.detail || "Username or Password is incorrect",
         })
       );
     } else if (loginData.isSuccess) {

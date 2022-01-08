@@ -57,6 +57,8 @@ const Answers = ({ questionID, answerCount, answers }) => {
         answers.map((answer) => (
           <Description
             id={answer.id}
+            type="answer"
+            username={answer.username}
             upvotes={answer.upvotes}
             downvotes={answer.downvotes}
             description={answer.answer}

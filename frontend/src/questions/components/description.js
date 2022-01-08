@@ -5,14 +5,27 @@ import {
   ListItemText,
   Typography,
   IconButton,
+  Card,
+  CardContent,
+  Link,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import ArrowDropUpSharpIcon from "@material-ui/icons/ArrowDropUpSharp";
 import ArrowDropDownSharpIcon from "@material-ui/icons/ArrowDropDownSharp";
 import TagList from "./tagList";
 import Comments from "./comments";
 
+const CardContentNoPadding = styled(CardContent)(`
+  padding: 10px 16px;
+  &:last-child {
+    padding-bottom: 10px;
+  }
+`);
+
 const Description = ({
   id,
+  type,
+  username,
   upvotes,
   downvotes,
   description,
@@ -44,9 +57,35 @@ const Description = ({
           }
         ></ListItem>
       </List>
-      <Stack paddingTop={1} spacing={1}>
+      <Stack
+        style={{
+          width: "100%",
+        }}
+        paddingTop={1}
+        spacing={1}
+      >
         <Typography variant="body1">{description}</Typography>
         <TagList tags={tags} />
+
+        {/* USER CARD */}
+        {username && (
+          <Card className="userCard">
+            <CardContentNoPadding>
+              <Typography
+                sx={{ fontSize: 10 }}
+                color="text.primary"
+                gutterBottom
+              >
+                {type === "question" ? "Asked by" : "Answered by"}
+              </Typography>
+              <Typography variant="h7" component="div">
+                <Link href="#" underline="none">
+                  {username}
+                </Link>
+              </Typography>
+            </CardContentNoPadding>
+          </Card>
+        )}
         <Comments
           id={id}
           onCommentSubmit={onCommentSubmit}

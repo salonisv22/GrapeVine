@@ -41,11 +41,13 @@ const Questions = () => {
 
           <Description
             id={data.id}
+            type="question"
             upvotes={data.upvotes}
             downvotes={data.downvotes}
             description={data.description}
             tags={data.tags}
             comments={data.comments}
+            username={data.username}
             onCommentSubmit={(id, comment) => {
               addQuestionComment({
                 question: id,
