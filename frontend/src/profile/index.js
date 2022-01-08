@@ -1,7 +1,9 @@
 import * as React from "react";
+import { useState } from "react";
 import { Avatar, Stack, Tab, Typography } from "@mui/material";
 import { Box, Card, Grid } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { OnlyDate } from "../utilities/time";
 import {
   AccountCircleOutlined,
   SettingsOutlined,
@@ -13,14 +15,19 @@ import {
 import MyProfile from "./profile";
 import Notification from "./notification";
 import Setting from "./setting";
+import { useSelfQuery } from "../services/authenticationApi";
 
 const Profile = () => {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = useState("1");
+  const { data:selfData }= useSelfQuery();
+  console.log(selfData);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  return (
+  return !selfData ? (
+    <div>Loading.....</div>
+  ) : (
     <>
       <Grid
         container
@@ -42,7 +49,7 @@ const Profile = () => {
               </Avatar>
               <Stack direction="column" spacing={1}>
                 <div>
-                  <Typography variant="h4">Saloni</Typography>
+                    <Typography variant="h4">{selfData.username}</Typography>
                   <Typography sx={{ opacity: 0.8 }} variant="subtitle2">
                     Student
                   </Typography>
@@ -62,7 +69,7 @@ const Profile = () => {
                   </Stack>
                   <Stack alignContent={"center"} direction="row" spacing={1}>
                     <Cake />
-                    <div>Member from 1 december, 2020</div>
+                      <div>Member from <OnlyDate date={selfData.joined_at}/></div>
                   </Stack>
                   <Stack alignContent={"center"} direction="row" spacing={1}>
                     <AccessTime />

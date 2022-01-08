@@ -2,7 +2,7 @@ import { Container, Divider } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { useGetQuestionByIdQuery } from "../services/QuestionsService";
-
+import Time from "../utilities/time";
 import Answers from "./components/answers";
 import { useQuestionCommentMutation } from "../services/commentService";
 
@@ -26,13 +26,7 @@ const Questions = () => {
               <div>
                 Asked at:
                 <b>
-                  {new Date(data.questioned_at).toLocaleString([], {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                    <Time date={data.questioned_at} />
                 </b>
               </div>
               <div>
