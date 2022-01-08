@@ -55,21 +55,24 @@ const Answers = ({ questionID, answerCount, answers }) => {
       </Stack>
       {answers ? (
         answers.map((answer) => (
-          <Description
-            id={answer.id}
-            type="answer"
-            username={answer.username}
-            upvotes={answer.upvotes}
-            downvotes={answer.downvotes}
-            description={answer.answer}
-            comments={answer.comments}
-            onCommentSubmit={(id, comment) => {
-              answerComment({
-                answer: id,
-                comment: comment,
-              });
-            }}
-          />
+          <div id={answer.id}>
+            <Description
+              id={answer.id}
+              type="answer"
+              username={answer.username}
+              upvotes={answer.upvotes}
+              downvotes={answer.downvotes}
+              description={answer.answer}
+              comments={answer.comments}
+              answered_at={answer.answered_at}
+              onCommentSubmit={(id, comment) => {
+                answerComment({
+                  answer: id,
+                  comment: comment,
+                });
+              }}
+            />
+          </div>
         ))
       ) : (
         <></>

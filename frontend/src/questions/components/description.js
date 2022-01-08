@@ -10,10 +10,17 @@ import {
   Link,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import ArrowDropUpSharpIcon from "@material-ui/icons/ArrowDropUpSharp";
-import ArrowDropDownSharpIcon from "@material-ui/icons/ArrowDropDownSharp";
+import { useDispatch } from "react-redux";
+import { addAlertMessage } from "../../redux/alertMessage";
+
+import {
+  ArrowDropUpSharp,
+  ArrowDropDownSharp,
+  Share,
+} from "@material-ui/icons";
 import TagList from "./tagList";
 import Comments from "./comments";
+import Time from "../../utilities/time";
 
 const CardContentNoPadding = styled(CardContent)(`
   padding: 10px 16px;
@@ -32,14 +39,16 @@ const Description = ({
   tags,
   comments,
   onCommentSubmit,
+  answered_at,
 }) => {
+  const dispatch = useDispatch();
   return (
     <Stack direction="row" spacing={3} marginTop={2}>
       <List className="QuestionInsight">
         <ListItem
           secondaryAction={
             <IconButton edge="end">
-              <ArrowDropUpSharpIcon fontSize="large" />
+              <ArrowDropUpSharp fontSize="large" />
             </IconButton>
           }
         ></ListItem>
@@ -52,7 +61,7 @@ const Description = ({
         <ListItem
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <ArrowDropDownSharpIcon fontSize="large" />
+              <ArrowDropDownSharp fontSize="large" />
             </IconButton>
           }
         ></ListItem>
@@ -68,20 +77,51 @@ const Description = ({
         <TagList tags={tags} />
 
         {/* USER CARD */}
-        {username && (
+        {username && type === "answer" && (
           <Card className="userCard">
             <CardContentNoPadding>
               <Typography
-                sx={{ fontSize: 10 }}
+                sx={{ fontSize: 11 }}
                 color="text.primary"
                 gutterBottom
               >
-                {type === "question" ? "Asked by" : "Answered by"}
+                {type === "question" ? (
+                  "Asked by"
+                ) : (
+                  <div>Answered at &nbsp;{Time({ date: answered_at })}</div>
+                )}
               </Typography>
               <Typography variant="h7" component="div">
-                <Link href="#" underline="none">
-                  {username}
-                </Link>
+                <Stack
+                  direction="row"
+                  style={{ width: "100%", justifyContent: "space-between" }}
+                >
+                  <Link href="#" underline="none">
+                    {username}
+                  </Link>
+                  <Share
+                    fontSize="small"
+                    style={{
+                      cursor: "pointer",
+                      marginLeft: "auto",
+                      marginRight: "4px",
+                    }}
+                    onClick={() => {
+                      dispatch(
+                        addAlertMessage({
+                          severity: "success",
+                          message: "Link copied to clipboard",
+                        })
+                      );
+                      navigator.clipboard.writeText(
+                        window.location.origin +
+                          window.location.pathname +
+                          "#" +
+                          id
+                      );
+                    }}
+                  />
+                </Stack>
               </Typography>
             </CardContentNoPadding>
           </Card>
