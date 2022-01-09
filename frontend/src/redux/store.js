@@ -19,11 +19,7 @@ import { login, validateSelf } from "../services/authenticationApi";
 import { users } from "../services/usersApi";
 import alertMessage from "./alertMessage";
 import { Questions } from "../services/QuestionsService";
-<<<<<<< HEAD
 import { Comments } from "../services/commentService";
-=======
-import { Comments } from "../services/commentService"
->>>>>>> 5b563cc9c4f1a8151a520c9dfbd0935e4d7d580a
 import { Answers } from "../services/answerService";
 
 import { isRejectedWithValue } from "@reduxjs/toolkit";
@@ -46,15 +42,12 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  [login.reducerPath]: login.reducer,
   [validateSelf.reducerPath]: validateSelf.reducer,
   [users.reducerPath]: users.reducer,
   [Questions.reducerPath]: Questions.reducer,
   [Comments.reducerPath]: Comments.reducer,
-<<<<<<< HEAD
   [Answers.reducerPath]: Answers.reducer,
-=======
-  [Answers.reducerPath]:Answers.reducer,
->>>>>>> 5b563cc9c4f1a8151a520c9dfbd0935e4d7d580a
   alertMessage: alertMessage,
 });
 

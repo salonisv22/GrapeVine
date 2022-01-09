@@ -44,6 +44,8 @@ const Notification = () => {
         return "warning";
       case "answered":
         return "info";
+      default:
+        return "info";
     }
   };
   return (

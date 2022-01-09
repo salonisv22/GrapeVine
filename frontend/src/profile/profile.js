@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   Paper,
   Typography,
@@ -9,53 +10,56 @@ import {
   TableHead,
   Tab,
   TableRow,
+  styled,
+  Stack,
 } from "@mui/material";
+import { useSelfQuery } from "../services/authenticationApi";
+import QuestionList from "../questions/components/questionList";
 import { Box, Divider } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import Question from "./../questions/questionByID";
+import { useUserQuestionQuery } from "../services/QuestionsService";
+
+const StyledTabPanel = styled(TabPanel)({
+  width: "100%",
+});
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+  height: 100,
+  width: 100,
+  lineHeight: "60px",
+}));
 const summary = (
   <>
-    <Typography variant="h4">Stats</Typography>
-    <Paper sx={{ width: "100%" }}>
-      <Typography sx={{ opacity: 0.8, padding: "5px" }} variant="subtitle2">
-        <div>These are the statistics of your account</div>
-      </Typography>
-      <Divider />
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Questions</TableCell>
-              <TableCell align="center">Answers</TableCell>
-              <TableCell align="center">Upvotes</TableCell>
-              <TableCell align="center">Downvotes</TableCell>
-              <TableCell align="center">Comments</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableCell align="center">0</TableCell>
-            <TableCell align="center">0</TableCell>
-            <TableCell align="center">0</TableCell>
-            <TableCell align="center">0</TableCell>
-            <TableCell align="center">0</TableCell>
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+    {/* <Typography variant="h4">Stats</Typography>
+    <Divider /> */}
+    {/* <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        marginTop: "10px",
+        "& > :not(style)": {
+          m: 1,
+          width: 128,
+          height: 128,
+        },
+      }}
+    > */}
+    <Stack direction="row" spacing={3}>
+      <StyledPaper elevation={4}>Hello Charlie</StyledPaper>
+      <StyledPaper elevation={4}>Hello Charlie</StyledPaper>
+      <StyledPaper elevation={4}>Hello Charlie</StyledPaper>
+    </Stack>
+    {/* </Box> */}
   </>
 );
-const question = (
-  <>
-    <Typography sx={{ opacity: 0.8, padding: "5px" }} variant="subtitle2">
-      <div>These are the questions you have asked</div>
-    </Typography>
-    <Divider />
-    <Question />
-  </>
-);
+
 export default function MyProfile() {
   const [value, setValue] = useState("10");
-
+  let { id } = useParams();
+  const { data } = useUserQuestionQuery(id);
   const handleChange = (event, newValue) => {
     console.log(newValue);
     setValue(newValue);
@@ -86,12 +90,20 @@ export default function MyProfile() {
             <Tab label="My Upvotes" value="14" />
             <Tab label="My Downvotes" value="15" />
           </TabList>
-          <TabPanel value="10">{summary}</TabPanel>
-          <TabPanel value="11">{question}</TabPanel>
-          <TabPanel value="12">My Answers</TabPanel>
-          <TabPanel value="13">My Comments</TabPanel>
-          <TabPanel value="14">My Upvotes</TabPanel>
-          <TabPanel value="15">My Downvotes</TabPanel>
+          <StyledTabPanel value="10">{summary}</StyledTabPanel>
+          <StyledTabPanel value="11">
+            <Typography
+              sx={{ opacity: 0.8, padding: "5px" }}
+              variant="subtitle2"
+            >
+              <div>These are the questions you have asked</div>
+            </Typography>
+            <QuestionList questions={data} />
+          </StyledTabPanel>
+          <StyledTabPanel value="12">My Answers</StyledTabPanel>
+          <StyledTabPanel value="13">My Comments</StyledTabPanel>
+          <StyledTabPanel value="14">My Upvotes</StyledTabPanel>
+          <StyledTabPanel value="15">My Downvotes</StyledTabPanel>
         </TabContext>
       </Box>
     </>

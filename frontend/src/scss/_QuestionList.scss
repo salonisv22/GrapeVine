@@ -14,12 +14,22 @@
   padding: 0.7rem 1rem !important;
 }
 
+.RestrictText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
-.RestrictText{
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   -webkit-line-clamp: 2; /* number of lines to show */
-           line-clamp: 2; 
-   -webkit-box-orient: vertical;
+.userCard {
+  align-self: flex-end;
+  height: max-content;
+  width: max-content;
+  background: #3f51b517 !important;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 }

@@ -1,6 +1,8 @@
+import Loading from "./Layout/components/Loading";
+
 const Home = () => {
     return (<>
-        <h1>Home</h1>
+        <Loading/>
     </>);
 }
 

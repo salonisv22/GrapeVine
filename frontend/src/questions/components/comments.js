@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Divider, TextField } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/material";
+import Time from "../../utilities/time"
 
 const Comments = ({ id, comments, onCommentSubmit }) => {
   const [comment, setComment] = useState();
@@ -15,13 +16,7 @@ const Comments = ({ id, comments, onCommentSubmit }) => {
               <>
                 <Typography variant="caption">
                   {item.comment} -<b>{item.username}</b>{" "}
-                  {new Date(item.commented_at).toLocaleString([], {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  <Time date={item.commented_at}/>
                 </Typography>
                 <Divider variant="middle" />
               </>

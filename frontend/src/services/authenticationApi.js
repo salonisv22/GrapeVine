@@ -42,15 +42,14 @@ export const login = createApi({
 });
 
 export const validateSelf = createApi({
-  reducerPath: "me",
+  reducerPath: "validateSelf",
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    validateSelf: builder.query({
+    self: builder.query({
       query: () => ({
         url: "me/",
         method: "GET",
         headers: {
-          ...config.POST_HEADER,
           Authorization: `Bearer ${localStorage.getItem("grapevine")}`,
         },
       }),
@@ -60,4 +59,4 @@ export const validateSelf = createApi({
 
 export const { useLoginMutation, useRefreshMutation, useLogoutMutation } =
   login;
-export const { useValidateSelfQuery } = validateSelf;
+export const { useSelfQuery } = validateSelf;
