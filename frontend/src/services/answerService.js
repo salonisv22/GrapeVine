@@ -27,10 +27,21 @@ export const Answers = createApi({
         },
       }),
     }),
+
+    userAnswer: builder.query({
+      query: (id) => ({
+        url: `user-answers/?user=${id}`,
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("grapevine")}`,
+        },
+      }),
+    }),
   }),
 });
 
 export const {
     usePostAnswerMutation,
-    useGetAnswerByIdQuery
+  useGetAnswerByIdQuery,
+    useUserAnswerQuery
 } = Answers;

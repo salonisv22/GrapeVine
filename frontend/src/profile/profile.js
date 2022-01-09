@@ -13,11 +13,12 @@ import {
   styled,
   Stack,
 } from "@mui/material";
-import { useSelfQuery } from "../services/authenticationApi";
 import QuestionList from "../questions/components/questionList";
 import { Box, Divider } from "@material-ui/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useUserQuestionQuery } from "../services/QuestionsService";
+import { useUserAnswerQuery } from "../services/answerService"
+import AnswerList from "../questions/components/myAnswers";
 
 const StyledTabPanel = styled(TabPanel)({
   width: "100%",
@@ -26,52 +27,66 @@ const StyledTabPanel = styled(TabPanel)({
 const StyledPaper = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   textAlign: "center",
-  color: theme.palette.text.secondary,
   height: 100,
   width: 100,
   lineHeight: "60px",
 }));
 const summary = (
   <>
-    {/* <Typography variant="h4">Stats</Typography>
-    <Divider /> */}
-    {/* <Box
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        marginTop: "10px",
-        "& > :not(style)": {
-          m: 1,
-          width: 128,
-          height: 128,
-        },
-      }}
-    > */}
-    <Stack direction="row" spacing={3}>
-      <StyledPaper elevation={4}>Hello Charlie</StyledPaper>
-      <StyledPaper elevation={4}>Hello Charlie</StyledPaper>
-      <StyledPaper elevation={4}>Hello Charlie</StyledPaper>
+    <Stack
+      direction="row"
+      spacing={5}
+      height="100%"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <StyledPaper elevation={6}>
+        <Typography variant="body1" marginTop={2}>
+          Questions
+        </Typography>
+      </StyledPaper>
+      <StyledPaper elevation={6}>
+        <Typography variant="body1" marginTop={2}>
+          Answers
+        </Typography>
+      </StyledPaper>
+      <StyledPaper elevation={6}>
+        <Typography variant="body1" marginTop={2}>
+          Comments
+        </Typography>
+      </StyledPaper>
+      <StyledPaper elevation={6}>
+        <Typography variant="body1" marginTop={2}>
+          Upvotes
+        </Typography>
+      </StyledPaper>
+      <StyledPaper elevation={6}>
+        <Typography variant="body1" marginTop={2}>
+          Downvotes
+        </Typography>
+      </StyledPaper>
     </Stack>
     {/* </Box> */}
   </>
 );
 
-export default function MyProfile() {
+export default function MyProfile({ id }) {
   const [value, setValue] = useState("10");
-  let { id } = useParams();
   const { data } = useUserQuestionQuery(id);
+  const { data:answerdata } = useUserAnswerQuery(id);
+  console.log(answerdata);
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
   return (
     <>
       <Box
         sx={{
-          flexGrow: 1,
+          lexWrap: "wrap",
           bgcolor: "background.paper",
           display: "flex",
           minHeight: "300px",
+          width: "100%",
         }}
       >
         <TabContext value={value}>
@@ -100,7 +115,15 @@ export default function MyProfile() {
             </Typography>
             <QuestionList questions={data} />
           </StyledTabPanel>
-          <StyledTabPanel value="12">My Answers</StyledTabPanel>
+          <StyledTabPanel value="12">
+            <Typography
+              sx={{ opacity: 0.8, padding: "5px" }}
+              variant="h6"
+            >
+              <div>These are the answers you have answered</div>
+            </Typography>
+            <AnswerList answers={answerdata} />
+          </StyledTabPanel>
           <StyledTabPanel value="13">My Comments</StyledTabPanel>
           <StyledTabPanel value="14">My Upvotes</StyledTabPanel>
           <StyledTabPanel value="15">My Downvotes</StyledTabPanel>

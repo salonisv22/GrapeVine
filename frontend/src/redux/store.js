@@ -21,6 +21,7 @@ import alertMessage from "./alertMessage";
 import { Questions } from "../services/QuestionsService";
 import { Comments } from "../services/commentService";
 import { Answers } from "../services/answerService";
+import {Votes} from "../services/voteServices"
 
 import { isRejectedWithValue } from "@reduxjs/toolkit";
 /**
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   [Questions.reducerPath]: Questions.reducer,
   [Comments.reducerPath]: Comments.reducer,
   [Answers.reducerPath]: Answers.reducer,
+  [Votes.reducerPath]:Votes.reducer,
   alertMessage: alertMessage,
 });
 

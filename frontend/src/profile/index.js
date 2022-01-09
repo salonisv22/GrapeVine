@@ -44,12 +44,11 @@ const Profile = () => {
                 alt="Cindy Baker"
                 variant="square"
               >
-                {" "}
-                <h2>S</h2>
+                  <h1>{selfData.username[0].toUpperCase()}</h1>
               </Avatar>
               <Stack direction="column" spacing={1}>
                 <div>
-                    <Typography variant="h4">{selfData.username}</Typography>
+                  <Typography variant="h4">{selfData.username}</Typography>
                   <Typography sx={{ opacity: 0.8 }} variant="subtitle2">
                     Student
                   </Typography>
@@ -65,11 +64,13 @@ const Profile = () => {
                 >
                   <Stack alignContent={"center"} direction="row" spacing={1}>
                     <Email />
-                    <div>salonisv22@gmail.com</div>
+                      <div>{selfData.email}</div>
                   </Stack>
                   <Stack alignContent={"center"} direction="row" spacing={1}>
                     <Cake />
-                      <div>Member from <OnlyDate date={selfData.joined_at}/></div>
+                    <div>
+                      Member from <OnlyDate date={selfData.date_joined} />
+                    </div>
                   </Stack>
                   <Stack alignContent={"center"} direction="row" spacing={1}>
                     <AccessTime />
@@ -84,7 +85,13 @@ const Profile = () => {
               <Box sx={{ width: "100%" }}>
                 <Box sx={{ width: "90vw", typography: "body1" }}>
                   <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <Box
+                      sx={{
+                        borderBottom: 1,
+                        borderColor: "divider",
+                        width: "100%",
+                      }}
+                    >
                       <TabList
                         onChange={handleChange}
                         variant="fullWidth"
@@ -108,13 +115,13 @@ const Profile = () => {
                       </TabList>
                     </Box>
                     <TabPanel value="1">
-                      <MyProfile />
+                        <MyProfile id={selfData.id}/>
                     </TabPanel>
                     <TabPanel value="2">
                       <Notification />
                     </TabPanel>
                     <TabPanel value="3">
-                      <Setting />
+                        <Setting id={selfData.id}/>
                     </TabPanel>
                   </TabContext>
                 </Box>

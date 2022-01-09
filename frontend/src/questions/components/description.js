@@ -21,7 +21,8 @@ import {
 import TagList from "./tagList";
 import Comments from "./comments";
 import Time from "../../utilities/time";
-
+  
+  
 const CardContentNoPadding = styled(CardContent)(`
   padding: 10px 16px;
   &:last-child {
@@ -39,6 +40,8 @@ const Description = ({
   tags,
   comments,
   onCommentSubmit,
+  onUpvoteSubmit,
+  onDownvoteSubmit,
   answered_at,
 }) => {
   const dispatch = useDispatch();
@@ -48,20 +51,30 @@ const Description = ({
         <ListItem
           secondaryAction={
             <IconButton edge="end">
-              <ArrowDropUpSharp fontSize="large" />
+              <ArrowDropUpSharp
+                onClick={() => {
+                  onUpvoteSubmit(id);
+                }}
+                fontSize="large"
+              />
             </IconButton>
           }
         ></ListItem>
         <ListItem>
           <ListItemText
             className="QuestionInsightText"
-            primary={upvotes - downvotes}
+            primary={upvotes-downvotes}
           />
         </ListItem>
         <ListItem
           secondaryAction={
             <IconButton edge="end" aria-label="delete">
-              <ArrowDropDownSharp fontSize="large" />
+              <ArrowDropDownSharp
+                onClick={() => {
+                  onDownvoteSubmit(id);
+                }}
+                fontSize="large"
+              />
             </IconButton>
           }
         ></ListItem>
