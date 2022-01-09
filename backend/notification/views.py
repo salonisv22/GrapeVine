@@ -1,12 +1,15 @@
 from django.http.response import HttpResponse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from rest_framework import serializers, viewsets
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from question.models import QuestionComment
 from answer.models import AnswerComment, Answer
 from notification.models import Notification
 from notification.serializers import NotificationSerializer
 from vote.models import *
+from rest_framework.response import Response
+from django.db.models import Q
 
 def index(request):
     return HttpResponse('''
@@ -23,6 +26,21 @@ def index(request):
 class NotificationView(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated,]
+    ordering = ['-created',]
+
+    http_method_names = ['get',]
+
+    def list(self, request, *args, **kwargs):
+        queryset = Notification.objects.filter(Q(user = request.user))
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
     @receiver(post_save, sender=UpvoteQuestion)
     @receiver(post_save, sender=DownvoteQuestion)

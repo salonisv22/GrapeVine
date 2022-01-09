@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from rest_framework_simplejwt import views as jwt_views
+from notification.views import NotificationView
 
 from question.views import QuestionCommentView
 
@@ -35,6 +36,7 @@ router.register(r'question', QuestionView)
 router.register(r'answer', AnswerView) 
 router.register(r'question-comment', QuestionCommentView)
 router.register(r'answer-comment', AnswerCommentView)
+router.register(r'notification', NotificationView)
 
 
 urlpatterns = router.urls
