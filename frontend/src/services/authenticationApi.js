@@ -54,9 +54,19 @@ export const validateSelf = createApi({
         },
       }),
     }),
+    sendWS: builder.mutation({
+      query: () => ({
+        url: "sendws/",
+        method: "POST",
+        headers: {
+          ...config.POST_HEADER,
+          Authorization: `Bearer ${localStorage.getItem("grapevine")}`,
+        },
+      }),
+    }),
   }),
 });
 
 export const { useLoginMutation, useRefreshMutation, useLogoutMutation } =
   login;
-export const { useSelfQuery } = validateSelf;
+export const { useSelfQuery, useSendWSMutation } = validateSelf;

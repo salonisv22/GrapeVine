@@ -1,4 +1,3 @@
-from django.http.response import HttpResponse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework import viewsets
@@ -10,17 +9,26 @@ from notification.serializers import NotificationSerializer
 from vote.models import *
 from rest_framework.response import Response
 from django.db.models import Q
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
-def index(request):
-    return HttpResponse('''
-    <h1>hello</h1> 
-    <script>
-    var socket = new WebSocket('ws://127.0.0.1:8000/ws/notifications/');
-    socket.onmessage = function(event){
-        var data = JSON.parse(event.data);
-        console.log(data);
-    }
-    </script>''')
+class TempView(viewsets.GenericViewSet):
+
+    def create(self, request, *args, **kwargs):
+        current_user = request.user # Getting current user
+        channel_layer = get_channel_layer()
+        data = "notification"+ "...." # Pass any data based on your requirement
+        # Trigger message sent to group
+        async_to_sync(channel_layer.group_send)(
+            str("c684d068-aea6-481d-bdf7-613b1272dac9"),  # Group Name, Should always be string
+            {
+                "type": "chatroom_message",   # Custom Function written in the consumers.py
+                "data": data,
+            },
+        )  
+
+        return Response({"msg":"success"}, status=200)
+
 
 
 class NotificationView(viewsets.ModelViewSet):
@@ -136,4 +144,17 @@ class NotificationView(viewsets.ModelViewSet):
                     }
                 )
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            obj = serializer.save()
+            noti = NotificationSerializer(instance=obj).data
+            channel_layer = get_channel_layer()
+            print(instance.user.id)
+            print(noti)
+            async_to_sync(channel_layer.group_send)(
+                str(instance.user.id),  # Group Name, Should always be string
+                {
+                    "type": "send_notification",   # Custom Function written in the consumers.py
+                    "data": serializer.data,
+                },
+            )  
+
+           

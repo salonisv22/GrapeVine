@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 
 from rest_framework_simplejwt import views as jwt_views
+from notification.views import TempView
 from notification.views import NotificationView
 
 from question.views import QuestionCommentView
@@ -48,5 +49,6 @@ urlpatterns += [
     path('', include('authentication.urls')),
     path('',include('vote.urls')),
     path('',include('notification.urls')),
+    path('sendws/', TempView.as_view({'post':'create'}))
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
