@@ -10,14 +10,18 @@ import { Share } from "@material-ui/icons";
 import Time from "../utilities/time";
 import Answers from "./components/answers";
 import Description from "./components/description";
+import {
+  useQuestionUpvoteMutation,
+  useQuestionDownvoteMutation,
+} from "../services/voteServices";
 
 const Questions = () => {
   const dispatch = useDispatch();
-  const [addQuestionComment, questionCommentData] =
-    useQuestionCommentMutation();
+  const [addQuestionComment, questionCommentData] =useQuestionCommentMutation();
   let { id } = useParams();
-
   const { data } = useGetQuestionByIdQuery(id);
+  const [questionDownvote, questionDownvoteData] =useQuestionDownvoteMutation();
+  const [questionUpvote, questionUpvoteData] = useQuestionUpvoteMutation();
 
   useEffect(() => {
     const scrollToHashElement = () => {
@@ -89,6 +93,16 @@ const Questions = () => {
             tags={data.tags}
             comments={data.comments}
             username={data.username}
+            onUpvoteSubmit={(id) => {
+              questionUpvote({
+                question: id,
+              });
+            }}
+            onDownvoteSubmit={(id) => {
+              questionDownvote({
+                question: id,
+              });
+            }}
             onCommentSubmit={(id, comment) => {
               addQuestionComment({
                 question: id,

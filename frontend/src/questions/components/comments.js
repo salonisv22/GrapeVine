@@ -16,7 +16,7 @@ const Comments = ({ id, comments, onCommentSubmit }) => {
               <>
                 <Typography variant="caption">
                   {item.comment} -<b>{item.username}</b>{" "}
-                  <Time date={item.commented_at}/>
+                  <Time date={item.commented_at} />
                 </Typography>
                 <Divider variant="middle" />
               </>
@@ -26,16 +26,21 @@ const Comments = ({ id, comments, onCommentSubmit }) => {
           <></>
         )}
       </Stack>
-      <form onSubmit={() => onCommentSubmit(id, comment)}>
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        onCommentSubmit(id, comment)
+        setComment("");
+      }}>
         <TextField
           label="Add a comment"
           id="standard-size-small"
           size="small"
-          variant="standard"
+          variant="outlined"
           value={comment}
           onChange={(e) => {
             setComment(e.target.value);
-          }}
+          }
+           }
         />
       </form>
     </>

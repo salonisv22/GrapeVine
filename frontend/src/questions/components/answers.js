@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { addAlertMessage } from "../../redux/alertMessage";
 import { useDispatch } from "react-redux";
-
 import { usePostAnswerMutation } from "../../services/answerService";
 import { useAnswerCommentMutation } from "../../services/commentService";
 import Description from "./description";
+import {useAnswerDownvoteMutation,useAnswerUpvoteMutation} from "../../services/voteServices"
 
 const Answers = ({ questionID, answerCount, answers }) => {
   const [answer, setAnswer] = useState();
@@ -21,6 +21,8 @@ const Answers = ({ questionID, answerCount, answers }) => {
   const [answerHelperText, setAnswerHelperText] = useState(true);
   const [answerComment, answerCommentData] = useAnswerCommentMutation();
   const [postAnswer, postAnswerData] = usePostAnswerMutation();
+  const [answerDownvote, answerDownvoteData] =useAnswerDownvoteMutation();
+  const [answerUpvote, answerUpvoteData] = useAnswerUpvoteMutation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,6 +67,16 @@ const Answers = ({ questionID, answerCount, answers }) => {
                 upvotes={answer.upvotes}
                 downvotes={answer.downvotes}
                 description={answer.answer}
+                onDownvoteSubmit={(id) =>
+                  answerDownvote({
+                    answer: id,
+                  })
+                }
+                onUpvoteSubmit={(id) =>
+                  answerUpvote({
+                    answer: id,
+                  })
+                }
                 comments={answer.comments}
                 answered_at={answer.answered_at}
                 onCommentSubmit={(id, comment) => {

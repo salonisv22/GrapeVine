@@ -11,10 +11,21 @@ export const users = createApi({
         url: "user/",
         method: "POST",
         body: newUser,
-        header: config.POST_HEADER,
+        headers: config.POST_HEADER,
+      }),
+    }),
+    updateUser: builder.mutation({
+      query: ({ id, newInfo }) => ({
+        url: `user/${id}/`,
+        method: "PATCH",
+        body: newInfo,
+        headers: {
+          ...config.POST_HEADER,
+          Authorization: `Bearer ${localStorage.getItem("grapevine")}`,
+        },
       }),
     }),
   }),
 });
 
-export const { useCreateUserMutation } = users;
+export const { useCreateUserMutation,useUpdateUserMutation } = users;

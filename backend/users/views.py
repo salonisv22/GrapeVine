@@ -5,6 +5,7 @@ from .models import Users
 from .serializers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
+from django.http import QueryDict
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.db.models import Q
 # Create your views here.
@@ -34,8 +35,12 @@ class UserView(viewsets.ModelViewSet):
             if self.request.data.get('password', False) and instance.check_password(self.request.data.get('password')) :
                 instance.set_password(self.request.data.get('password'))
             else:
-                return Response(data={'error': "You are trting to set new_password but password does not match or is not provided, request rejected "}, status=status.HTTP_400_BAD_REQUEST)
-        field_data = dict(request.data)
+                return Response(data={'error': "You are trying to set new_password but password does not match or is not provided, request rejected "}, status=status.HTTP_400_BAD_REQUEST)
+        # request.data._mutable=True
+        field_data=QueryDict("",mutable=True)
+        field_data.update(request.data)
+        # field_data = QueryDict.copy(request.data)
+        
         super_field = ["last_login", "is_superuser", "is_staff", "is_active", "date_joined", "joined_at", "groups", "user_permissions"]
         if not instance.is_superuser:
             for field in super_field:
