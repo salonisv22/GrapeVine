@@ -1,9 +1,11 @@
 import Loading from "./Layout/components/Loading";
 
 const Home = () => {
-    return (<>
-        <Loading/>
-    </>);
-}
+  return (
+    <>
+      <Loading />
+    </>
+  );
+};
 
 export default Home;

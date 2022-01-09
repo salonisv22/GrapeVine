@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Notification',
+            name='NotificationRoomMessage',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('action', models.TextField(choices=[('commented', 'commented'), ('upvoted', 'upvoted'), ('downvoted', 'downvoted'), ('answered', 'answered')], default='answered', max_length=15)),

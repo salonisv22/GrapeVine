@@ -1,9 +1,9 @@
 from django.db import models
-from question.models import Question
 from users.models import Users
 import uuid
 
 # Create your models here.
+
 class Notification(models.Model):
 
     ACTION = [('commented','commented'), ('upvoted','upvoted'), ('downvoted','downvoted'), ('answered','answered')]
@@ -17,3 +17,8 @@ class Notification(models.Model):
     post = models.TextField(choices=POST, max_length=9, default='question')
     post_id = models.UUIDField(default = uuid.uuid4)
     description = models.TextField()
+
+    def __str__(self):
+        return self.description
+
+
